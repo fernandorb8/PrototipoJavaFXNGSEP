@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" 
+fx:controller="application.controller.MainController">
+	<left>
+		<fx:include fx:id="fileExplorer" source="FileExplorer.fxml"/>
+	</left>
+	<center>
+		<BorderPane>
+			<bottom>
+				<ScrollPane id="progress-bar-view">
+					<VBox>
+						<ProgressBar progress="-1.0f"/>
+						<ProgressBar progress="-1.0f"/>
+						<ProgressBar progress="-1.0f"/>
+						<ProgressBar progress="-1.0f"/>
+					</VBox>
+				</ScrollPane>
+			</bottom>
+		</BorderPane>
+	</center>
+</BorderPane>
+
