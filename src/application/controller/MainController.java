@@ -32,10 +32,12 @@ public class MainController {
 	@FXML 
 	private FileExplorerController fileExplorerController;
 	
+	@FXML 
+	private ProgressBarController progressBarController;
+	
 	@FXML
 	private void initialize() {
-		Path p1 = Paths.get("/tmp/foo");
-		System.out.println(p1.toAbsolutePath());
+		
 	}
 
 }

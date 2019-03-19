@@ -4,11 +4,14 @@
 
 .progress-bar{
 	-fx-pref-width: 860;
-	-fx-padding: 20;
 }
 
 #tree-view {
 	-fx-pref-width: 300;
 	-fx-pref-height: 655;
+}
+
+.prog-bar-box{	
+	-fx-padding: 10;
 }
 

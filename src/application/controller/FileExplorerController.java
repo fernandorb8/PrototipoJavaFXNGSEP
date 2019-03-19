@@ -6,11 +6,16 @@ import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class FileExplorerController {
 
@@ -45,5 +50,18 @@ public class FileExplorerController {
 		rootNode.setExpanded(true);
 		this.treeviewFileBrowse.setRoot(rootNode);
 	}
+	
+	@FXML
+	private void changeDir(ActionEvent ae) {		
+		DirectoryChooser chooser = new DirectoryChooser();
+		chooser.setTitle("Seleccionar carpeta");
+		File selectedDirectory = chooser.showDialog(null);
+		if (selectedDirectory != null) {
+			FileTreeItem rootNode = new FileTreeItem(selectedDirectory);
+			rootNode.setExpanded(true);
+			this.treeviewFileBrowse.setRoot(rootNode);
+		}
+	}
+	
 
 }
