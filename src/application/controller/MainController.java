@@ -22,6 +22,8 @@ import javafx.scene.layout.BorderPane;
 
 public class MainController {
 	
+	// Attributes.
+	
 	@FXML 
 	private FileExplorerController fileExplorerController;
 	
@@ -31,6 +33,10 @@ public class MainController {
 	@FXML
 	private BorderPane rootBorderPane;
 	
+	private IAnalysisAreaController controller;
+	
+	// FXML Life cycle methods.
+	
 	@FXML
 	private void initialize() {
 		
@@ -39,13 +45,18 @@ public class MainController {
 		
 	}
 	
+	// Methods.
+	
 	private void handleNGSEPAnalyzeFileEvent(NGSEPAnalyzeFileEvent event) {
 		try {
-			IAnalysisAreaController controller = (IAnalysisAreaController)
+			if (controller != null) {
+				controller.prepareForReplacement();
+			}
+			controller = (IAnalysisAreaController)
 					Class.forName(
 							event.controllerFullyQualifiedName
 							).newInstance();
-			controller.initialize();
+			controller.initializeController(rootBorderPane.getScene());
 			Node analysisAreaRoot = controller.getRootNode();
 			BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
 			analysisArea.setCenter(analysisAreaRoot);

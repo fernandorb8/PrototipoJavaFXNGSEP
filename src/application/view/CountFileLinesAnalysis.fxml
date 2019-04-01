@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" 
+styleClass="analysis-area">
 	<Text> Nombre de archivo:</Text>
 	<Text fx:id="fileNameText"> Nombre</Text>
 	<Text> Número de líneas:</Text>
 	<Text fx:id="numberLinesText"> Número</Text>
-</StackPane>
+</VBox>
 

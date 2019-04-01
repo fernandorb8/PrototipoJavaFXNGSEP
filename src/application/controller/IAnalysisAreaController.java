@@ -6,6 +6,7 @@ package application.controller;
 
 import application.event.NGSEPEvent;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 
 /**
  * @author fernando
@@ -15,8 +16,10 @@ public interface IAnalysisAreaController {
 	
 	/**
 	 * Initialize the component.
+	 * @param scene The scene of the application to add css files and perform 
+	 * other actions.
 	 */
-	public void initialize();
+	public void initializeController(Scene scene);
 	
 	/**
 	 * Get the root node to display in the center area of the application.
@@ -29,5 +32,10 @@ public interface IAnalysisAreaController {
 	 * @param event
 	 */
 	public void handleNGSEPEvent(NGSEPEvent event);
+	
+	/**
+	 * Remove css files and perform any other action.
+	 */
+	public void prepareForReplacement();
 
 }
