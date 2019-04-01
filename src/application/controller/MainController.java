@@ -13,19 +13,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 package application.controller;
 
-import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import application.controller.fileexplorer.FileExplorerController;
+import application.event.NGSEPAnalyzeFileEvent;
+import application.event.NGSEPEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 
 public class MainController {
 	
@@ -36,8 +29,33 @@ public class MainController {
 	private ProgressBarController progressBarController;
 	
 	@FXML
+	private BorderPane rootBorderPane;
+	
+	@FXML
 	private void initialize() {
 		
+		rootBorderPane.addEventHandler(NGSEPAnalyzeFileEvent.FILE, 
+				this::handleNGSEPAnalyzeFileEvent);
+		
+	}
+	
+	private void handleNGSEPAnalyzeFileEvent(NGSEPAnalyzeFileEvent event) {
+		try {
+			IAnalysisAreaController controller = (IAnalysisAreaController)
+					Class.forName(
+							event.controllerFullyQualifiedName
+							).newInstance();
+			controller.initialize();
+			Node analysisAreaRoot = controller.getRootNode();
+			BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
+			analysisArea.setCenter(analysisAreaRoot);
+			controller.handleNGSEPEvent(event);
+			
+		} catch (InstantiationException | IllegalAccessException 
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

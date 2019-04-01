@@ -10,11 +10,11 @@
 	<VBox>
 		<VBox styleClass="prog-bar-box">
 			<Text> Tarea 1 Archivo 1</Text>
-			<ProgressBar progress="-1.0f"/>
+			<ProgressBar progress="0.1f"/>
 		</VBox>
 		<VBox styleClass="prog-bar-box">
 			<Text>Tarea 2 Archivo 2</Text>
-			<ProgressBar progress="-2.0f"/>
+			<ProgressBar progress="0.2f"/>
 		</VBox>
 		<VBox styleClass="prog-bar-box">
 			<Text>Tarea 3 Archivo 3</Text>

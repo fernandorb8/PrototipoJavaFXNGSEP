@@ -1,4 +1,4 @@
-package application.controller;
+package application.controller.fileexplorer;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -8,14 +8,11 @@ import java.nio.file.Path;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class FileExplorerController {
 
@@ -26,7 +23,25 @@ public class FileExplorerController {
 	void initialize() {
 		// populate file browser
 		this.treeviewFileBrowse.setCellFactory((TreeView<String> p) -> new TextFieldTreeCellImpl());
-		rootDirectoriesRoot();
+		userHomeRoot();
+		
+	}
+
+	// Methods.
+	
+	/**
+	 * Load user's home folder as the root of the file explorer.
+	 */
+	private void userHomeRoot() {
+		if (System.getProperty("user.home") != null) {
+			FileTreeItem rootNode = new FileTreeItem(
+					new File(System.getProperty("user.home"))
+					);
+			rootNode.setExpanded(true);
+			this.treeviewFileBrowse.setRoot(rootNode);
+		} else {
+			rootDirectoriesRoot();
+		}
 	}
 	
 	/**
@@ -51,6 +66,10 @@ public class FileExplorerController {
 		this.treeviewFileBrowse.setRoot(rootNode);
 	}
 	
+	/**
+	 * 
+	 * @param ae
+	 */
 	@FXML
 	private void changeDir(ActionEvent ae) {		
 		DirectoryChooser chooser = new DirectoryChooser();

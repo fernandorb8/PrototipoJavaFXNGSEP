@@ -33,32 +33,44 @@
  * Modified for this application.
  */
 
-package application.controller;
+package application.controller.fileexplorer;
 
+import application.event.NGSEPAnalyzeFileEvent;
+import application.event.NGSEPEvent;
+import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
 
 public class TextFieldTreeCellImpl extends TreeCell<String> {
 
-    private final ContextMenu addMenu = new ContextMenu();
+    private final ContextMenu contextMenu = new ContextMenu();
 
     public TextFieldTreeCellImpl() {
     	super();
-        MenuItem addMenuItem = new MenuItem("Mover archivo");
-        addMenu.getItems().add(addMenuItem);
+        MenuItem countMenuItem = new MenuItem("Contar líneas");
+        countMenuItem.setOnAction((ActionEvent t) -> {        	
+        	t.consume();
+            this.fireEvent(
+            		new NGSEPAnalyzeFileEvent(
+            				"application.controller.CountFileLinesController"
+            				)
+            		);
+        });
+        contextMenu.getItems().add(countMenuItem);
+        
     }
 
     @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty) {
+        if (empty || item == null) {
             setText(null);
             setGraphic(null);
         } else {
         	setText(getItem().toString());
         	setGraphic(getTreeItem().getGraphic());        	
-        	setContextMenu(addMenu);
+        	setContextMenu(contextMenu);
         }
     }
 }

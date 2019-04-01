@@ -43,7 +43,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  * Modified for this specific software.
  */
 
-package application.controller;
+package application.controller.fileexplorer;
 
 import java.io.File;
 import java.util.Comparator;

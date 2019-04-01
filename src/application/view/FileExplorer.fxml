@@ -7,14 +7,14 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-	<VBox xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="application.controller.FileExplorerController">
-		<MenuBar>
-			<Menu text="Explorardor">
-				<MenuItem text="Cambiar carpeta" 
-				onAction="#changeDir"/>
-			</Menu>
-		</MenuBar>
-		<TreeView fx:id="treeviewFileBrowse"  id="tree-view"/>
-	</VBox>
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="application.controller.fileexplorer.FileExplorerController">
+	<MenuBar>
+		<Menu text="Explorardor">
+			<MenuItem text="Cambiar carpeta" 
+			onAction="#changeDir"/>
+		</Menu>
+	</MenuBar>
+	<TreeView fx:id="treeviewFileBrowse"  id="tree-view"/>
+</VBox>
 
