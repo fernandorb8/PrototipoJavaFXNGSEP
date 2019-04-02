@@ -15,7 +15,7 @@ package application.controller;
 
 import application.controller.fileexplorer.FileExplorerController;
 import application.event.NGSEPAnalyzeFileEvent;
-import application.event.NGSEPEvent;
+import application.event.NGSEPExecuteTaksEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -33,30 +33,41 @@ public class MainController {
 	@FXML
 	private BorderPane rootBorderPane;
 	
-	private IAnalysisAreaController controller;
+	private AnalysisAreaController controller;
 	
 	// FXML Life cycle methods.
 	
 	@FXML
 	private void initialize() {
 		
-		rootBorderPane.addEventHandler(NGSEPAnalyzeFileEvent.FILE, 
-				this::handleNGSEPAnalyzeFileEvent);
+		rootBorderPane.addEventHandler(NGSEPAnalyzeFileEvent.FILE
+				, this::handleNGSEPAnalyzeFileEvent);
+		rootBorderPane.addEventHandler(NGSEPExecuteTaksEvent.EXECUTE_TASK
+				, this::handleNGSEPExecuteTaskEvent);
 		
 	}
 	
 	// Methods.
 	
+	/**
+	 * Get controller to process analysis and load it into the scene.
+	 * @param event
+	 */
 	private void handleNGSEPAnalyzeFileEvent(NGSEPAnalyzeFileEvent event) {
 		try {
-			if (controller != null) {
-				controller.prepareForReplacement();
+			if (controller != null && controller.getCSSExternalForm() != null) {
+				rootBorderPane.getScene().getStylesheets()
+					.remove(controller.getCSSExternalForm());				
 			}
-			controller = (IAnalysisAreaController)
+			controller = (AnalysisAreaController)
 					Class.forName(
 							event.controllerFullyQualifiedName
 							).newInstance();
-			controller.initializeController(rootBorderPane.getScene());
+			controller.initializeController();
+			if (controller.getCSSExternalForm() != null) {
+				rootBorderPane.getScene().getStylesheets()
+				.add(controller.getCSSExternalForm());
+			}
 			Node analysisAreaRoot = controller.getRootNode();
 			BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
 			analysisArea.setCenter(analysisAreaRoot);
@@ -67,6 +78,14 @@ public class MainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Receive the task to be passed to the Executor.
+	 * @param event
+	 */
+	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
+		System.out.println(event.task);
 	}
 
 }

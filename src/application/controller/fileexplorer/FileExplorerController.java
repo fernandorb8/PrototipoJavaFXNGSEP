@@ -22,7 +22,7 @@ public class FileExplorerController {
 	@FXML
 	void initialize() {
 		// populate file browser
-		this.treeviewFileBrowse.setCellFactory((TreeView<String> p) -> new TextFieldTreeCellImpl());
+		this.treeviewFileBrowse.setCellFactory((TreeView<String> p) -> new FileExplorerTreeCell());
 		userHomeRoot();
 		
 	}

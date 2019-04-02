@@ -10,6 +10,7 @@ import javafx.event.EventType;
  * @author fernando
  *
  */
+@SuppressWarnings("serial")
 public class NGSEPEvent extends Event {
 	
 	public static final EventType<NGSEPEvent> ANY = 

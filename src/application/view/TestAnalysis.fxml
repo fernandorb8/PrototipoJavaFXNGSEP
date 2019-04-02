@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.controls.Button?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
+	<Button text="Probar proceso" AnchorPane.topAnchor="10" 
+	AnchorPane.leftAnchor="10" onAction="#triggerNGSEPExecuteTaskEvent"/>
+</AnchorPane>
+

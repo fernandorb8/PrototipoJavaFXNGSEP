@@ -35,30 +35,12 @@
 
 package application.controller.fileexplorer;
 
-import application.event.NGSEPAnalyzeFileEvent;
-import application.event.NGSEPEvent;
-import javafx.event.ActionEvent;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
 
-public class TextFieldTreeCellImpl extends TreeCell<String> {
+public class FileExplorerTreeCell extends TreeCell<String> {
 
-    private final ContextMenu contextMenu = new ContextMenu();
-
-    public TextFieldTreeCellImpl() {
-    	super();
-        MenuItem countMenuItem = new MenuItem("Contar líneas");
-        countMenuItem.setOnAction((ActionEvent t) -> {        	
-        	t.consume();
-            this.fireEvent(
-            		new NGSEPAnalyzeFileEvent(
-            				"application.controller.CountFileLinesController"
-            				)
-            		);
-        });
-        contextMenu.getItems().add(countMenuItem);
-        
+    public FileExplorerTreeCell() {
+    	super();         
     }
 
     @Override
@@ -70,7 +52,7 @@ public class TextFieldTreeCellImpl extends TreeCell<String> {
         } else {
         	setText(getItem().toString());
         	setGraphic(getTreeItem().getGraphic());        	
-        	setContextMenu(contextMenu);
+        	setContextMenu(ContextMenuFactory.getContextMenu(this));
         }
     }
 }

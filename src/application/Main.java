@@ -1,7 +1,5 @@
 package application;
 	
-import java.util.concurrent.TimeUnit;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

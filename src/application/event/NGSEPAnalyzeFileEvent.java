@@ -9,6 +9,7 @@ import javafx.event.EventType;
  * @author fernando
  *
  */
+@SuppressWarnings("serial")
 public class NGSEPAnalyzeFileEvent extends NGSEPEvent {
 	
 	// Constants.

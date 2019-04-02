@@ -10,22 +10,16 @@ import java.io.IOException;
 import java.net.URL;
 
 import application.controller.fileexplorer.FileTreeItem;
-import application.controller.fileexplorer.TextFieldTreeCellImpl;
+import application.controller.fileexplorer.FileExplorerTreeCell;
 import application.event.NGSEPEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
  * @author fernando
  *
  */
-public class CountFileLinesController implements IAnalysisAreaController {
+public class CountFileLinesController extends AnalysisAreaController {
 	
 	// Attributes.
 	
@@ -35,40 +29,19 @@ public class CountFileLinesController implements IAnalysisAreaController {
 	@FXML
 	private Text numberLinesText;
 	
-	@FXML
-	private VBox root;
-	
-	private Scene scene;
-	
-	private String cssExternalForm;
-	
-	// IAnalysisAreaController methods.
+	// AnalysisAreaController methods.
 
 	@Override
-	public void initializeController(Scene scene) {
-		try {
-			this.scene = scene;
-			cssExternalForm = getClass()
-					.getResource("/application/view/countfilelinesanalysis.css")
-					.toExternalForm();
-			scene.getStylesheets().add(cssExternalForm);
-			URL fxmlLocation = getClass()
-					.getResource("/application/view/CountFileLinesAnalysis.fxml");
-			FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
-			fxmlLoader.setController(this);
-			this.root = (VBox) fxmlLoader.load();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getCSSExternalForm() {
+		return getClass()
+				.getResource("/application/view/countfilelinesanalysis.css")
+				.toExternalForm();
 	}
 
-	/* (non-Javadoc)
-	 * @see application.controller.IAnalysisAreaController#getRootNode()
-	 */
 	@Override
-	public Node getRootNode() {
-		return root;
+	public URL getFXMLResource() {
+		return getClass()
+				.getResource("/application/view/CountFileLinesAnalysis.fxml");
 	}
 
 	/* (non-Javadoc)
@@ -77,7 +50,7 @@ public class CountFileLinesController implements IAnalysisAreaController {
 	@Override
 	public void handleNGSEPEvent(NGSEPEvent event) {
 		try {
-			TextFieldTreeCellImpl cell = (TextFieldTreeCellImpl) 
+			FileExplorerTreeCell cell = (FileExplorerTreeCell) 
 					event.getTarget();
 			FileTreeItem fileTreeItem = (FileTreeItem) cell.getTreeItem();
 			File file = fileTreeItem.getFile();
@@ -93,11 +66,6 @@ public class CountFileLinesController implements IAnalysisAreaController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void prepareForReplacement() {
-		scene.getStylesheets().remove(cssExternalForm);
 	}
 
 }
