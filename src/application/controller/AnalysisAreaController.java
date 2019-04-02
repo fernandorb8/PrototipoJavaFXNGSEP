@@ -34,7 +34,7 @@ public abstract class AnalysisAreaController {
 			URL fxmlLocation = getFXMLResource();
 			FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
 			fxmlLoader.setController(this);
-			this.root = (VBox) fxmlLoader.load();
+			this.root = fxmlLoader.load();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

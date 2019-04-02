@@ -29,7 +29,7 @@ public final class ContextMenuFactory {
 	    // TODO Build menu based on file type.
 	    if(true) {
 	    	addCountLines(contextMenu, cell);
-	    	
+	    	addTest(contextMenu, cell);
 	    }
 	    return contextMenu;
 	}
@@ -41,16 +41,30 @@ public final class ContextMenuFactory {
 	 */
 	private static final void addCountLines(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
-			MenuItem countMenuItem = new MenuItem("Contar líneas");
-		    countMenuItem.setOnAction((ActionEvent t) -> {        	
-		    	t.consume();
-		    	cell.fireEvent(
-		        		new NGSEPAnalyzeFileEvent(
-		        				"application.controller.CountFileLinesController"
-		        				)
-		        		);
-		    });
-		    contextMenu.getItems().add(countMenuItem);
+		MenuItem countMenuItem = new MenuItem("Contar líneas");
+	    countMenuItem.setOnAction((ActionEvent t) -> {        	
+	    	t.consume();
+	    	cell.fireEvent(
+	        		new NGSEPAnalyzeFileEvent(
+	        				"application.controller.CountFileLinesController"
+	        				)
+	        		);
+	    });
+	    contextMenu.getItems().add(countMenuItem);
+	}
+	
+	private static final void addTest(ContextMenu contextMenu, 
+			FileExplorerTreeCell cell) {
+		MenuItem countMenuItem = new MenuItem("Test analysis");
+	    countMenuItem.setOnAction((ActionEvent t) -> {        	
+	    	t.consume();
+	    	cell.fireEvent(
+	        		new NGSEPAnalyzeFileEvent(
+	        				"application.controller.TestAnalysisController"
+	        				)
+	        		);
+	    });
+	    contextMenu.getItems().add(countMenuItem);
 	}
 
 }
