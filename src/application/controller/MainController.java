@@ -13,9 +13,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 package application.controller;
 
+import java.util.concurrent.ExecutorService;
+
 import application.controller.fileexplorer.FileExplorerController;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPExecuteTaksEvent;
+import application.executor.ExecutorSingleton;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -85,7 +88,8 @@ public class MainController {
 	 * @param event
 	 */
 	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
-		System.out.println(event.task);
+		ExecutorService executor = ExecutorSingleton.getExecutor();
+		executor.submit(event.task);
 	}
 
 }

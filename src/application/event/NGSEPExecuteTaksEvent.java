@@ -3,6 +3,8 @@
  */
 package application.event;
 
+import java.util.concurrent.TimeUnit;
+
 import javafx.event.EventType;
 
 /**
@@ -21,14 +23,14 @@ public class NGSEPExecuteTaksEvent extends NGSEPEvent {
 		
 	// Attributes.
 		
-	public String task;
+	public Runnable task;
 
 	// Methods.
 	
 	/**
 	 * @param eventType
 	 */
-	public NGSEPExecuteTaksEvent(String task) {
+	public NGSEPExecuteTaksEvent(Runnable task) {
 		super(EXECUTE_TASK);
 		this.task = task;
 	}

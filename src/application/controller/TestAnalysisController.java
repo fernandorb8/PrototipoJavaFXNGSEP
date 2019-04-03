@@ -4,6 +4,7 @@
 package application.controller;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import application.event.NGSEPEvent;
 import application.event.NGSEPExecuteTaksEvent;
@@ -49,8 +50,22 @@ public class TestAnalysisController extends AnalysisAreaController {
 	
 	@FXML
 	private void triggerNGSEPExecuteTaskEvent(ActionEvent actionEvent) {
-		this.getRootNode().fireEvent(new NGSEPExecuteTaksEvent(actionEvent
-				.getTarget().toString()));
+		this.getRootNode().fireEvent(
+				new NGSEPExecuteTaksEvent(
+						this::task
+						));
+	}
+	
+	private void task() {
+		try {
+			String threadName = Thread.currentThread().getName();
+			System.out.println(threadName + " starting task");
+			TimeUnit.SECONDS.sleep(10);
+			System.out.println(threadName + " ending task");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

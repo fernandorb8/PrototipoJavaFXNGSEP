@@ -1,5 +1,6 @@
 package application;
 	
+import application.executor.ExecutorSingleton;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +9,15 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	
+	// Main
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	// Application methods.
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -23,7 +33,10 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		ExecutorSingleton.stopExecutor();
 	}
+	
 }
