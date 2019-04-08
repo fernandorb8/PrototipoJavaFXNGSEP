@@ -7,27 +7,34 @@ package application.controller;
 import java.io.IOException;
 import java.net.URL;
 
+import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import ngsep.main.ProgressNotifier;
 
 /**
+ * Abstract class used to implement all NGSEP analysis. Gives the root node
+ * to be loaded into the {@link Scene} and handles {@link NGSEPEvent}. The root 
+ * is loaded from an .fxml.
  * @author fernando
- * Interface used to implement all NGSEP analysis. 
  */
 public abstract class AnalysisAreaController {
 	
 	// Attributes.
 	
 	@FXML
-	private Node root;
+	private Parent root;
+	
+	public ProgressBarController progressBarController;
 	
 	// Methods.
 	
 	/**
-	 * Initialize the component loading the .fxml file and setting the root.
+	 * Initialize the {@link AnalysisAreaController} loading the .fxml file and setting the root.
 	 */
 	public void initializeController() {
 		try {
@@ -35,6 +42,9 @@ public abstract class AnalysisAreaController {
 			FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
 			fxmlLoader.setController(this);
 			this.root = fxmlLoader.load();
+			if (this.getCSSExternalForm() != null) {
+				this.root.getStylesheets().add(this.getCSSExternalForm());
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,27 +55,30 @@ public abstract class AnalysisAreaController {
 	 * Get the root node to display in the center area of the application.
 	 * @return
 	 */
-	public Node getRootNode(){
+	public Parent getRootNode(){
 		return root;
 	}
 	
 	/**
 	 * Get the css for the analysis area to be added. If null then it doesn't
 	 * have one.
-	 * @return The css toExternalForm() or null if it doesn't have one.
+	 * @return The css {@link URL#toExternalForm()} or null if it doesn't have one.
 	 */
 	public abstract String getCSSExternalForm();
 	
 	/**
-	 * Get the .fxml file .getResource() to load.
+	 * Get the .fxml file {@link Class#getResource(String)} to load.
 	 * @return
 	 */
 	public abstract URL getFXMLResource();
 	
 	/**
-	 * Handle the NGSEPEvent received. 
-	 * @param event
+	 * Handle the {@link NGSEPEvent} received. This is usually an 
+	 * {@link NGSEPAnalyzeFileEvent} but is left with it's parent 
+	 * {@link EventType} as parameter for future development.
+	 * @param event The {@link NGSEPEvent} to be processed.
 	 */
-	public abstract void handleNGSEPEvent(NGSEPEvent event);
+	public abstract void handleNGSEPEvent(NGSEPEvent event, 
+			ProgressBarController progressBarController);
 
 }

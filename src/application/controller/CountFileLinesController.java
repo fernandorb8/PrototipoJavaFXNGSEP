@@ -14,10 +14,11 @@ import application.controller.fileexplorer.FileExplorerTreeCell;
 import application.event.NGSEPEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+import ngsep.main.ProgressNotifier;
 
 /**
+ * Test controller demonstrating the use on {@link AnalysisAreaController}.
  * @author fernando
- *
  */
 public class CountFileLinesController extends AnalysisAreaController {
 	
@@ -48,7 +49,8 @@ public class CountFileLinesController extends AnalysisAreaController {
 	 * @see application.controller.IAnalysisAreaController#handleNGSEPEvent(application.event.NGSEPEvent)
 	 */
 	@Override
-	public void handleNGSEPEvent(NGSEPEvent event) {
+	public void handleNGSEPEvent(NGSEPEvent event, 
+			ProgressBarController progressBarController) {
 		try {
 			FileExplorerTreeCell cell = (FileExplorerTreeCell) 
 					event.getTarget();
@@ -62,6 +64,7 @@ public class CountFileLinesController extends AnalysisAreaController {
 			while (bufferedReader.readLine() != null) lines++;
 			bufferedReader.close();
 			numberLinesText.setText(lines + "");
+			progressBarController.keepRunning(100);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -36,9 +36,18 @@
 package application.controller.fileexplorer;
 
 import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeView;
 
+/**
+ * {@link TreeCell} for the File Explorer {@link TreeView}.
+ * @author fernando
+ *
+ */
 public class FileExplorerTreeCell extends TreeCell<String> {
 
+	/**
+	 * Call {@link TreeCell#TreeCell()}.
+	 */
     public FileExplorerTreeCell() {
     	super();         
     }

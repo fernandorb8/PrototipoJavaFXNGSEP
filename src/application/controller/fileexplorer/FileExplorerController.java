@@ -14,6 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 
+/**
+ * Controller for the File Explorer area of the application. Handles
+ * the {@link TreeView}.
+ * @author fernando
+ *
+ */
 public class FileExplorerController {
 
 	@FXML
@@ -67,8 +73,8 @@ public class FileExplorerController {
 	}
 	
 	/**
-	 * 
-	 * @param ae
+	 * Change de root node to the desired directory.
+	 * @param ae {@link ActionEvent} not in use.
 	 */
 	@FXML
 	private void changeDir(ActionEvent ae) {		

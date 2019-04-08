@@ -15,6 +15,6 @@ fx:controller="application.controller.fileexplorer.FileExplorerController">
 			onAction="#changeDir"/>
 		</Menu>
 	</MenuBar>
-	<TreeView fx:id="treeviewFileBrowse"  id="tree-view"/>
+	<TreeView fx:id="treeviewFileBrowse"  id="tree-view" VBox.vgrow="ALWAYS"/>
 </VBox>
 

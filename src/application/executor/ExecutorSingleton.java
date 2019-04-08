@@ -7,7 +7,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import application.event.NGSEPExecuteTaksEvent;
+
 /**
+ * Singleton {@link ExecutorService} to execute an {@link NGSEPExecuteTaksEvent}'s
+ * task.
  * @author fernando
  *
  */
@@ -16,8 +20,8 @@ public final class ExecutorSingleton {
 	private static ExecutorService executor;
 	
 	/**
-	 * Get a 10 pool sized newFixedThreadPool(10).
-	 * @return ExecutorService
+	 * Get a 10 pool sized {@link Executors#newFixedThreadPool(int)}.
+	 * @return ExecutorService singleton.
 	 */
 	public static final ExecutorService getExecutor() {
 		if (executor == null) {

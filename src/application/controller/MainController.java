@@ -17,12 +17,21 @@ import java.util.concurrent.ExecutorService;
 
 import application.controller.fileexplorer.FileExplorerController;
 import application.event.NGSEPAnalyzeFileEvent;
+import application.event.NGSEPEvent;
 import application.event.NGSEPExecuteTaksEvent;
 import application.executor.ExecutorSingleton;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Main controller of the application. Used to communicate the 
+ * different top level controllers: {@link AnalysisAreaController}, 
+ * {@link ProgressBarAreaController}, {@link FileExplorerController}; making
+ * use of all {@link NGSEPEvent}.
+ * @author fernando
+ *
+ */
 public class MainController {
 	
 	// Attributes.
@@ -31,7 +40,7 @@ public class MainController {
 	private FileExplorerController fileExplorerController;
 	
 	@FXML 
-	private ProgressBarController progressBarController;
+	private ProgressBarAreaController progressBarAreaController;
 	
 	@FXML
 	private BorderPane rootBorderPane;
@@ -40,6 +49,9 @@ public class MainController {
 	
 	// FXML Life cycle methods.
 	
+	/**
+	 * Set NSEPEvent global (At root Node level) handlers and filters.
+	 */
 	@FXML
 	private void initialize() {
 		
@@ -53,28 +65,23 @@ public class MainController {
 	// Methods.
 	
 	/**
-	 * Get controller to process analysis and load it into the scene.
-	 * @param event
+	 * Get {@link AnalysisAreaController} to process analysis and load 
+	 * it's root into the {@link javafx.scene.Scene}.
+	 * @param event The {@link NGSEPAnalyzeFileEvent} containing the 
+	 * {@link AnalysisAreaController} fully qualified name.
 	 */
 	private void handleNGSEPAnalyzeFileEvent(NGSEPAnalyzeFileEvent event) {
 		try {
-			if (controller != null && controller.getCSSExternalForm() != null) {
-				rootBorderPane.getScene().getStylesheets()
-					.remove(controller.getCSSExternalForm());				
-			}
 			controller = (AnalysisAreaController)
 					Class.forName(
 							event.controllerFullyQualifiedName
 							).newInstance();
 			controller.initializeController();
-			if (controller.getCSSExternalForm() != null) {
-				rootBorderPane.getScene().getStylesheets()
-				.add(controller.getCSSExternalForm());
-			}
 			Node analysisAreaRoot = controller.getRootNode();
 			BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
 			analysisArea.setCenter(analysisAreaRoot);
-			controller.handleNGSEPEvent(event);
+			controller.handleNGSEPEvent(event, 
+					progressBarAreaController.getProgressNotifier());
 			
 		} catch (InstantiationException | IllegalAccessException 
 				| ClassNotFoundException e) {
@@ -85,7 +92,8 @@ public class MainController {
 	
 	/**
 	 * Receive the task to be passed to the Executor.
-	 * @param event
+	 * @param event {@link NGSEPExecuteTaksEvent} containing the {@link Runnable}
+	 * task.
 	 */
 	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
 		ExecutorService executor = ExecutorSingleton.getExecutor();

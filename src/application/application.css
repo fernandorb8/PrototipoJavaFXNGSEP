@@ -1,17 +1,22 @@
 #progress-bar-view {
-	-fx-pref-height: 200;
+	-fx-pref-height:200;
 }
 
 .progress-bar{
-	-fx-pref-width: 860;
+	-fx-pref-width:800;
+	-fx-pref-height:27;
 }
 
 #tree-view {
-	-fx-pref-width: 300;
-	-fx-pref-height: 655;
+	-fx-pref-width:300;
 }
+	
 
 .prog-bar-box{	
-	-fx-padding: 10;
+	-fx-padding:10;
+}
+
+.prog-bar-labels-grid-pane{
+	-fx-hgap:20;
 }
 

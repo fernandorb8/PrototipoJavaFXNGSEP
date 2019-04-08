@@ -5,9 +5,12 @@ package application.event;
 
 import java.util.concurrent.TimeUnit;
 
+import application.controller.MainController;
+import javafx.event.Event;
 import javafx.event.EventType;
 
 /**
+ * {@link Event} to execute a {@link Runnable} task.
  * @author fernando
  *
  */
@@ -28,7 +31,8 @@ public class NGSEPExecuteTaksEvent extends NGSEPEvent {
 	// Methods.
 	
 	/**
-	 * @param eventType
+	 * Creates an event for the {@link MainController} to execute the task.
+	 * @param task to be executed.
 	 */
 	public NGSEPExecuteTaksEvent(Runnable task) {
 		super(EXECUTE_TASK);

@@ -7,11 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-
+/**
+ * Main class of the application. Loads Main.fxml and application wide 
+ * application.css. Sets Scene dimensions.
+ * @author fernando
+ *
+ */
 public class Main extends Application {
 	
 	// Main
 	
+	/**
+	 * Launch the {@link Application}.
+	 * @param args Not used.
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

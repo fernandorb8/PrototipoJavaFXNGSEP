@@ -6,22 +6,25 @@ package application.controller.fileexplorer;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import application.controller.MainController;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPExecuteTaksEvent;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
 /**
+ * Factory to create {@link ContextMenu} for the {@link FileExplorerTreeCell}.
  * @author fernando
  *
  */
 public final class ContextMenuFactory {
 	
 	/**
-	 * Create a ContextMenu for the given FileExplorerTreeCell.
-	 * @param cell FileExplorerTreeCell
-	 * @return ContextMenu for the cell.
+	 * Create a {@link ContextMenu} for the given {@link FileExplorerTreeCell}.
+	 * @param cell {@link FileExplorerTreeCell}
+	 * @return {@link ContextMenu} for the {@link FileExplorerTreeCell}.
 	 */
 	public static final ContextMenu getContextMenu( 
 			FileExplorerTreeCell cell) {
@@ -38,9 +41,10 @@ public final class ContextMenuFactory {
 	}
 	
 	/**
-	 * Add a "Contar líneas" entry to the ContextMenu.
-	 * @param contextMenu
-	 * @param cell
+	 * Add a "Contar líneas" entry to the {@link ContextMenu}.
+	 * @param contextMenu {@link ContextMenu} to be modified.
+	 * @param cell {@link FileExplorerTreeCell} to fire 
+	 * {@link NGSEPAnalyzeFileEvent} to the {@link MainController}.
 	 */
 	private static final void addCountLines(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
@@ -56,6 +60,12 @@ public final class ContextMenuFactory {
 	    contextMenu.getItems().add(countMenuItem);
 	}
 	
+	/**
+	 * Test analysis with a {@link Button}.
+	 * @param contextMenu {@link ContextMenu} to be modified.
+	 * @param cell {@link FileExplorerTreeCell} to fire 
+	 * {@link NGSEPAnalyzeFileEvent} to the {@link MainController}.
+	 */
 	private static final void addTest(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
 		MenuItem countMenuItem = new MenuItem("Test analysis");
@@ -70,6 +80,12 @@ public final class ContextMenuFactory {
 	    contextMenu.getItems().add(countMenuItem);
 	}
 	
+	/**
+	 * Test {@link Runnable} for {@link NGSEPExecuteTaksEvent}.
+	 * @param contextMenu {@link ContextMenu} to be modified.
+	 * @param cell {@link FileExplorerTreeCell} to fire 
+	 * {@link NGSEPExecuteTaksEvent} to the {@link MainController}.
+	 */
 	private static final void addTest2(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
 		MenuItem countMenuItem = new MenuItem("Test execution");

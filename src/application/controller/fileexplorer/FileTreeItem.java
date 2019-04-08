@@ -56,6 +56,11 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * {@link TreeItem} for the {@link File}.
+ * @author fernando, Oracle and/or its affiliates and Hugues Johnson.
+ *
+ */
 public class FileTreeItem extends TreeItem<String> {
 	public static Image folderCollapseImage = new Image(
 			ClassLoader.getSystemResourceAsStream("com/huguesjohnson/debigulatorfx/res/folder.png"));
@@ -83,6 +88,13 @@ public class FileTreeItem extends TreeItem<String> {
 	private final String absolutePath;
 	private final boolean isDirectory;
 
+	/**
+	 * Build the {@link FileTreeItem} for the {@link File}, add it's
+	 * {@link EventHandler}s and set the {@link TreeItem}'s 
+	 * {@link TreeItem#valueProperty()}'s value and 
+	 * {@link TreeItem#graphicProperty()}'s value.
+	 * @param file {@link File} for the {@link TreeItem}.
+	 */
 	public FileTreeItem(File file) {
 		super(file.getAbsolutePath());
 		this.file = file;
@@ -91,19 +103,24 @@ public class FileTreeItem extends TreeItem<String> {
 		if (this.isDirectory) {
 			this.setGraphic(new ImageView(folderCollapseImage));
 			// add event handlers
-			this.addEventHandler(TreeItem.branchCollapsedEvent(), new EventHandler() {
+			this.addEventHandler(TreeItem.branchCollapsedEvent(), 
+					new EventHandler<TreeItem.TreeModificationEvent<String>>() {
+						@Override
+						public void 
+						handle(TreeItem.TreeModificationEvent<String> e) {
+							FileTreeItem source = (FileTreeItem) e.getSource();
+							if (!source.isExpanded()) {
+								ImageView iv = (ImageView) source.getGraphic();
+								iv.setImage(folderCollapseImage);
+								System.out.println(source.getValue());
+							}
+						}
+					});
+			this.addEventHandler(TreeItem.branchExpandedEvent(), 
+					new EventHandler<TreeItem.TreeModificationEvent<String>>() {
 				@Override
-				public void handle(Event e) {
-					FileTreeItem source = (FileTreeItem) e.getSource();
-					if (!source.isExpanded()) {
-						ImageView iv = (ImageView) source.getGraphic();
-						iv.setImage(folderCollapseImage);
-					}
-				}
-			});
-			this.addEventHandler(TreeItem.branchExpandedEvent(), new EventHandler() {
-				@Override
-				public void handle(Event e) {
+				public void 
+				handle(TreeItem.TreeModificationEvent<String> e) {
 					FileTreeItem source = (FileTreeItem) e.getSource();
 					if (source.isExpanded()) {
 						ImageView iv = (ImageView) source.getGraphic();
@@ -161,6 +178,11 @@ public class FileTreeItem extends TreeItem<String> {
 		return isLeaf;
 	}
 
+	/**
+	 * Build the {@link FileTreeItem}'s children.
+	 * @param treeItem {@link FileTreeItem} whose children are to be build.
+	 * @return An {@link ObservableList} with the children.
+	 */
 	private ObservableList<FileTreeItem> buildChildren(FileTreeItem treeItem) {
 		File f = treeItem.getFile();
 		if ((f != null) && (f.isDirectory())) {
@@ -170,14 +192,14 @@ public class FileTreeItem extends TreeItem<String> {
 				for (File childFile : files) {
 					children.add(new FileTreeItem(childFile));
 				}
-				children.sort(new Comparator() {
+				children.sort(new Comparator<FileTreeItem>() {
 
 					@Override
-					public int compare(Object o1, Object o2) {
+					public int compare(FileTreeItem o1, FileTreeItem o2) {
 						// TODO Auto-generated method stub
-						FileTreeItem ft1 = (FileTreeItem) o1;
-						FileTreeItem ft2 = (FileTreeItem) o2;
-						return ft1.getValue().compareTo(ft2.getValue());
+						FileTreeItem ft1 = o1;
+						FileTreeItem ft2 = o2;
+						return ft1.getValue().compareToIgnoreCase(ft2.getValue());
 					}
 					
 				});

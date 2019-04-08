@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.text.Text?>
+<?import application.view.ProgressBarComponent?>
+
+<ScrollPane id="progress-bar-view" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="application.controller.ProgressBarAreaController">
+	<VBox fx:id="progressBarComponentContainerVBox">
+	</VBox>
+</ScrollPane>
+

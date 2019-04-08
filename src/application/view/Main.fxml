@@ -6,12 +6,12 @@
 fx:controller="application.controller.MainController"
 fx:id="rootBorderPane">
 	<left>
-		<fx:include fx:id="fileExplorer" source="FileExplorer.fxml"/>
+		<fx:include source="FileExplorer.fxml" fx:id="fileExplorer"/>
 	</left>
 	<center>
 		<BorderPane>
 			<bottom>
-				<fx:include fx:id="progressBar" source="ProgressBar.fxml"/>
+				<fx:include source="ProgressBarArea.fxml" fx:id="progressBarArea"/>
 			</bottom>
 		</BorderPane>
 	</center>
