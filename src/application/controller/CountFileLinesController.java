@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import application.controller.fileexplorer.FileTreeItem;
+import application.concurrent.NGSEPTask;
 import application.controller.fileexplorer.FileExplorerTreeCell;
 import application.event.NGSEPEvent;
 import javafx.fxml.FXML;
@@ -46,11 +47,10 @@ public class CountFileLinesController extends AnalysisAreaController {
 	}
 
 	/* (non-Javadoc)
-	 * @see application.controller.IAnalysisAreaController#handleNGSEPEvent(application.event.NGSEPEvent)
+	 * @see application.controller.AnalysisAreaController#handleNGSEPEvent(application.event.NGSEPEvent)
 	 */
 	@Override
-	public void handleNGSEPEvent(NGSEPEvent event, 
-			ProgressBarController progressBarController) {
+	public void handleNGSEPEvent(NGSEPEvent event) {
 		try {
 			FileExplorerTreeCell cell = (FileExplorerTreeCell) 
 					event.getTarget();
@@ -64,7 +64,14 @@ public class CountFileLinesController extends AnalysisAreaController {
 			while (bufferedReader.readLine() != null) lines++;
 			bufferedReader.close();
 			numberLinesText.setText(lines + "");
-			progressBarController.keepRunning(100);
+			executeTask(new NGSEPTask<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					// TODO Auto-generated method stub
+					keepRunning(100);
+					return null;
+				}
+			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

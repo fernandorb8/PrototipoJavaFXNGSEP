@@ -15,11 +15,11 @@ package application.controller;
 
 import java.util.concurrent.ExecutorService;
 
+import application.concurrent.ExecutorSingleton;
 import application.controller.fileexplorer.FileExplorerController;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPEvent;
 import application.event.NGSEPExecuteTaksEvent;
-import application.executor.ExecutorSingleton;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -80,8 +80,7 @@ public class MainController {
 			Node analysisAreaRoot = controller.getRootNode();
 			BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
 			analysisArea.setCenter(analysisAreaRoot);
-			controller.handleNGSEPEvent(event, 
-					progressBarAreaController.getProgressNotifier());
+			controller.handleNGSEPEvent(event);
 			
 		} catch (InstantiationException | IllegalAccessException 
 				| ClassNotFoundException e) {
@@ -91,11 +90,13 @@ public class MainController {
 	}
 	
 	/**
-	 * Receive the task to be passed to the Executor.
+	 * Receive the task to be passed to the Executor and assing it to a
+	 * {@link ProgressBarController}.
 	 * @param event {@link NGSEPExecuteTaksEvent} containing the {@link Runnable}
 	 * task.
 	 */
 	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
+		progressBarAreaController.getProgressNotifier(event.task);
 		ExecutorService executor = ExecutorSingleton.getExecutor();
 		executor.submit(event.task);
 	}

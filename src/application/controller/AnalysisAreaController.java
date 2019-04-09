@@ -7,8 +7,11 @@ package application.controller;
 import java.io.IOException;
 import java.net.URL;
 
+import application.concurrent.NGSEPTask;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPEvent;
+import application.event.NGSEPExecuteTaksEvent;
+import javafx.concurrent.Task;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +31,6 @@ public abstract class AnalysisAreaController {
 	
 	@FXML
 	private Parent root;
-	
-	public ProgressBarController progressBarController;
 	
 	// Methods.
 	
@@ -75,10 +76,20 @@ public abstract class AnalysisAreaController {
 	/**
 	 * Handle the {@link NGSEPEvent} received. This is usually an 
 	 * {@link NGSEPAnalyzeFileEvent} but is left with it's parent 
-	 * {@link EventType} as parameter for future development.
+	 * {@link EventType} as parameter for future development. To handle the
+	 * {@link NGSEPEvent} the extending controller must extract the 
+	 * relevant information from the event and create an {@link NGSEPTask}
+	 * which also serves as the {@link ProgressNotifier}. The created
+	 * {@link NGSEPTask} must call {@link NGSEPTask#keepRunning(int)} to 
+	 * update the progress in the GUI. The created @link NGSEPTask} must then be 
+	 * passed to {@link AnalysisAreaController#executeTask(Task)}.
 	 * @param event The {@link NGSEPEvent} to be processed.
 	 */
-	public abstract void handleNGSEPEvent(NGSEPEvent event, 
-			ProgressBarController progressBarController);
+	public abstract void handleNGSEPEvent(NGSEPEvent event);
+	
+	public void executeTask(NGSEPTask<Void> task) {
+		getRootNode().fireEvent(
+				new NGSEPExecuteTaksEvent(task));
+	}
 
 }

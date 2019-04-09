@@ -5,9 +5,13 @@ package application.event;
 
 import java.util.concurrent.TimeUnit;
 
+import application.concurrent.NGSEPTask;
 import application.controller.MainController;
+import application.controller.ProgressBarController;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventType;
+import ngsep.main.ProgressNotifier;
 
 /**
  * {@link Event} to execute a {@link Runnable} task.
@@ -26,7 +30,7 @@ public class NGSEPExecuteTaksEvent extends NGSEPEvent {
 		
 	// Attributes.
 		
-	public Runnable task;
+	public NGSEPTask<Void> task;
 
 	// Methods.
 	
@@ -34,7 +38,7 @@ public class NGSEPExecuteTaksEvent extends NGSEPEvent {
 	 * Creates an event for the {@link MainController} to execute the task.
 	 * @param task to be executed.
 	 */
-	public NGSEPExecuteTaksEvent(Runnable task) {
+	public NGSEPExecuteTaksEvent(NGSEPTask<Void> task) {
 		super(EXECUTE_TASK);
 		this.task = task;
 	}

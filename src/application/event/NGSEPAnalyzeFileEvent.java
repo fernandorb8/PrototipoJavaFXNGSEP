@@ -3,6 +3,8 @@
  */
 package application.event;
 
+import java.io.File;
+
 import javafx.event.EventType;
 import ngsep.main.ProgressNotifier;
 
@@ -23,6 +25,8 @@ public class NGSEPAnalyzeFileEvent extends NGSEPEvent {
 	
 	public String controllerFullyQualifiedName;
 	
+	public File file;
+	
 	// Constructor.
 	
 	/**
@@ -30,9 +34,11 @@ public class NGSEPAnalyzeFileEvent extends NGSEPEvent {
 	 * start of an analysis.
 	 * @param controllerFullyQualifiedName To be used using reflection.
 	 */
-	public NGSEPAnalyzeFileEvent(String controllerFullyQualifiedName) {
+	public NGSEPAnalyzeFileEvent(String controllerFullyQualifiedName,
+			File file) {
 		super(NGSEPAnalyzeFileEvent.FILE);
 		this.controllerFullyQualifiedName = controllerFullyQualifiedName;
+		this.file = file;
 	}
 
 }

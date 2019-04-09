@@ -4,6 +4,11 @@
 package application.controller;
 
 import application.view.ProgressBarComponent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 import ngsep.main.ProgressNotifier;
 
@@ -14,11 +19,13 @@ import ngsep.main.ProgressNotifier;
  * @author fernando
  * 
  */
-public class ProgressBarController implements ProgressNotifier {
+public class ProgressBarController {
 	
 	// Attributes.
 	
 	public ProgressBarComponent progressBarComponent;
+	
+	private Task<Void> task;
 	
 	// Constructor.
 	
@@ -27,20 +34,43 @@ public class ProgressBarController implements ProgressNotifier {
 	 */
 	public ProgressBarController() {
 		this.progressBarComponent = new ProgressBarComponent();
+		this.progressBarComponent.shouldKeepRunning.addListener(
+			new ChangeListener<Boolean>() {
+				@Override
+				public void changed(
+						ObservableValue<? extends Boolean> observable, 
+						Boolean oldValue,
+						Boolean newValue) {
+					if (!newValue.booleanValue()) {
+						if (task!=null) {
+							task.cancel();
+						}
+						VBox parent = (VBox) progressBarComponent.getParent();
+						parent.getChildren().remove(progressBarComponent);
+					}	
+				}
+			}
+		);
 	}	
 	
+	// Methods.
 	
-	
-    // ProgressNotifier.
-    
-	@Override
-	public boolean keepRunning(int arg0) {
-		progressBarComponent.setProgress(arg0/100);
-		if(arg0 == 100 || !progressBarComponent.shouldKeepRunning) {
-			VBox parent = (VBox) progressBarComponent.getParent();
-			parent.getChildren().remove(progressBarComponent);
-		}
-		return progressBarComponent.shouldKeepRunning;
+	public void setTask(Task<Void> task) {
+		this.task = task;
+		progressBarComponent.taskProgressBarDoubleProperty()
+			.bind(task.progressProperty());
+		progressBarComponent.taskNameTextProperty().bind(task.titleProperty());
+		progressBarComponent.taskFileNameTextProperty()
+		.bind(task.messageProperty());
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			
+			@Override
+			public void handle(WorkerStateEvent event) {
+				VBox parent = (VBox) progressBarComponent.getParent();
+				parent.getChildren().remove(progressBarComponent);
+			}
+		});
+		
 	}
 
 }

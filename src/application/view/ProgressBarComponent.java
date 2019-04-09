@@ -1,11 +1,18 @@
 package application.view;
 
+import java.beans.SimpleBeanInfo;
 import java.io.IOException;
 
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPExecuteTaksEvent;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ProgressBar;
@@ -31,7 +38,7 @@ public class ProgressBarComponent extends VBox {
     @FXML
     private ProgressBar taskProgressBar;
     
-    public boolean shouldKeepRunning;
+    public BooleanProperty shouldKeepRunning;
     
     // Constructor.
 
@@ -39,7 +46,8 @@ public class ProgressBarComponent extends VBox {
      * Loads the node graph of this custom component.
      */
     public ProgressBarComponent() {
-    	shouldKeepRunning = true;
+    	shouldKeepRunning = new SimpleBooleanProperty();
+    	shouldKeepRunning.setValue(true);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
         		.getResource("/application/view/ProgressBarComponent.fxml"));
         fxmlLoader.setRoot(this);
@@ -114,7 +122,7 @@ public class ProgressBarComponent extends VBox {
      */
     @FXML
     protected void cancelProcess() {
-    	shouldKeepRunning = false;
+    	shouldKeepRunning.setValue(false);
     }
 
 }

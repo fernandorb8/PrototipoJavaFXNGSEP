@@ -1,6 +1,6 @@
 package application;
 	
-import application.executor.ExecutorSingleton;
+import application.concurrent.ExecutorSingleton;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
