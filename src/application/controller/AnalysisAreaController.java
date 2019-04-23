@@ -81,7 +81,7 @@ public abstract class AnalysisAreaController {
 	 * relevant information from the event and create an {@link NGSEPTask}
 	 * which also serves as the {@link ProgressNotifier}. The created
 	 * {@link NGSEPTask} must call {@link NGSEPTask#keepRunning(int)} to 
-	 * update the progress in the GUI. The created @link NGSEPTask} must then be 
+	 * update the progress in the GUI. The created {@link NGSEPTask} must then be 
 	 * passed to {@link AnalysisAreaController#executeTask(Task)}.
 	 * @param event The {@link NGSEPEvent} to be processed.
 	 */

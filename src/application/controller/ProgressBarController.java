@@ -3,7 +3,7 @@
  */
 package application.controller;
 
-import application.view.ProgressBarComponent;
+import application.view.component.ProgressBarComponent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;

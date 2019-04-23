@@ -4,11 +4,9 @@
 package application.controller;
 
 import application.concurrent.NGSEPTask;
-import application.view.ProgressBarComponent;
-import javafx.concurrent.Task;
+import application.view.component.ProgressBarComponent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
-import ngsep.main.ProgressNotifier;
 
 /**
  * Controller for the container of {@link ProgressBarComponent}. 
@@ -26,11 +24,12 @@ public class ProgressBarAreaController {
 	/**
 	 * Instantiates a new {@link ProgressBarController} and adds it's 
 	 * {@link ProgressBarComponent} to the progress bar section of the 
-	 * application.
-	 * @return A {@link ProgressBarController} implementing 
-	 * {@link ProgressNotifier}.
+	 * application. Then it binds to the {@link NGSEPTask} for progress
+	 * updating.
+	 * @return A {@link ProgressBarController} for the 
+	 * {@link ProgressBarComponent}
 	 */
-	public void getProgressNotifier(NGSEPTask<Void> task) {
+	public void addProgressBarComponentForTask(NGSEPTask<Void> task) {
 		ProgressBarController progressBarController = new ProgressBarController();
 		progressBarComponentContainerVBox.getChildren()
 			.add(progressBarController.progressBarComponent);

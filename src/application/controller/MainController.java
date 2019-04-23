@@ -96,7 +96,7 @@ public class MainController {
 	 * task.
 	 */
 	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
-		progressBarAreaController.getProgressNotifier(event.task);
+		progressBarAreaController.addProgressBarComponentForTask(event.task);
 		ExecutorService executor = ExecutorSingleton.getExecutor();
 		executor.submit(event.task);
 	}

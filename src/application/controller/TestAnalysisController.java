@@ -10,7 +10,6 @@ import application.concurrent.NGSEPTask;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPEvent;
 import application.event.NGSEPExecuteTaksEvent;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import ngsep.main.ProgressNotifier;
@@ -87,6 +86,12 @@ public class TestAnalysisController extends AnalysisAreaController {
         		});
 	}
 	
+	/**
+	 * Simulate a call to an NGSEPCore process that receives a 
+	 * {@link ProgressNotifier}.
+	 * @param progressNotifier The {@link ProgressNotifier}
+	 * @throws InterruptedException if the process is interrupted.
+	 */
 	private void executeCall(ProgressNotifier progressNotifier) 
 			throws InterruptedException {
 		String threadName = Thread.currentThread().getName();

@@ -79,7 +79,8 @@ public class FileExplorerController {
 	@FXML
 	private void changeDir(ActionEvent ae) {		
 		DirectoryChooser chooser = new DirectoryChooser();
-		chooser.setTitle("Seleccionar carpeta");
+		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		chooser.setTitle("Select folder");
 		File selectedDirectory = chooser.showDialog(null);
 		if (selectedDirectory != null) {
 			FileTreeItem rootNode = new FileTreeItem(selectedDirectory);

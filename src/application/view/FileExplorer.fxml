@@ -10,8 +10,8 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1"
 fx:controller="application.controller.fileexplorer.FileExplorerController">
 	<MenuBar>
-		<Menu text="Explorardor">
-			<MenuItem text="Cambiar carpeta" 
+		<Menu text="Explorer">
+			<MenuItem text="Change folder" 
 			onAction="#changeDir"/>
 		</Menu>
 	</MenuBar>

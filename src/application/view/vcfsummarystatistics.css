@@ -1,0 +1,30 @@
+#mainContainer {
+	-fx-padding:10;
+	-fx-spacing: 10;
+	-fx-fill-width:true;
+}
+
+.grid_pane {
+	-fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+/*
+.vbox_style {
+    -fx-border-color: black;
+    -fx-border-insets: 5;
+    -fx-border-width: 3;
+    -fx-border-style: dashed;
+    
+ }
+ */
+ 
+ .hbox {
+    -fx-spacing: 10;
+	-fx-alignment: center-left;
+ }
+ 
+ .second-col {
+ 	-fx-pref-width: 500;
+ }
+ 

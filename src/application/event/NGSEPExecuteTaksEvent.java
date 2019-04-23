@@ -3,15 +3,10 @@
  */
 package application.event;
 
-import java.util.concurrent.TimeUnit;
-
 import application.concurrent.NGSEPTask;
 import application.controller.MainController;
-import application.controller.ProgressBarController;
-import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventType;
-import ngsep.main.ProgressNotifier;
 
 /**
  * {@link Event} to execute a {@link Runnable} task.

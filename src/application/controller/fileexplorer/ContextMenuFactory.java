@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import application.concurrent.NGSEPTask;
+import application.controller.AnalysisAreaController;
 import application.controller.MainController;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPExecuteTaksEvent;
@@ -38,10 +39,50 @@ public final class ContextMenuFactory {
 	    	addCountLines(contextMenu, cell);
 	    	addTest(contextMenu, cell);
 	    	addTest2(contextMenu, cell);
+	    	addVCFSummaryStatistics(contextMenu, cell);
 	    }
 	    return contextMenu;
 	}
 	
+	/**
+	 * Add the {@link MenuItem} for VCFSummary Statistics.
+	 * @param contextMenu {@link ContextMenu} to be modified.
+	 * @param cell {@link FileExplorerTreeCell} to fire 
+	 * {@link NGSEPAnalyzeFileEvent} to the {@link MainController}.
+	 */
+	private static final void addVCFSummaryStatistics(ContextMenu contextMenu, 
+			FileExplorerTreeCell cell) {
+		addSimpleMenuItem(contextMenu, cell, "VCF Summary Statistics",
+				"application.controller.VCFSummaryStatistics");
+	}
+
+	/**
+	 * Add a {@link MenuItem} with the given menuItemLabel and an
+	 * {@link ActionEvent} handler that consumes the {@link ActionEvent}
+	 * and fires an {@link NGSEPAnalyzeFileEvent} with the 
+	 * controllerFullyQualifiedName and the {@link FileTreeItem}'s {@link File}.
+	 * @param contextMenu {@link ContextMenu} to be modified.
+	 * @param cell {@link FileExplorerTreeCell} to fire 
+	 * {@link NGSEPAnalyzeFileEvent} to the {@link MainController}.
+	 * @param menuItemLabel text of the {@link MenuItem}.
+	 * @param controllerFullyQualifiedName of the {@link AnalysisAreaController}.
+	 */
+	private static void addSimpleMenuItem(ContextMenu contextMenu, 
+			FileExplorerTreeCell cell, String menuItemLabel, 
+			String controllerFullyQualifiedName) {
+		MenuItem countMenuItem = new MenuItem(menuItemLabel);
+		FileTreeItem fileTreeItem = (FileTreeItem) cell.getTreeItem();
+	    countMenuItem.setOnAction((ActionEvent t) -> {        	
+	    	t.consume();
+	    	cell.fireEvent(
+	        		new NGSEPAnalyzeFileEvent(
+	        				controllerFullyQualifiedName,
+	        				fileTreeItem.getFile())
+	        		);
+	    });
+	    contextMenu.getItems().add(countMenuItem);
+	}
+
 	/**
 	 * Add a "Contar líneas" entry to the {@link ContextMenu}.
 	 * @param contextMenu {@link ContextMenu} to be modified.
@@ -50,17 +91,8 @@ public final class ContextMenuFactory {
 	 */
 	private static final void addCountLines(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
-		MenuItem countMenuItem = new MenuItem("Contar líneas");
-		FileTreeItem fileTreeItem = (FileTreeItem) cell.getTreeItem();
-	    countMenuItem.setOnAction((ActionEvent t) -> {        	
-	    	t.consume();
-	    	cell.fireEvent(
-	        		new NGSEPAnalyzeFileEvent(
-	        				"application.controller.CountFileLinesController",
-	        				fileTreeItem.getFile())
-	        		);
-	    });
-	    contextMenu.getItems().add(countMenuItem);
+		addSimpleMenuItem(contextMenu, cell, "Count lines",
+				"application.controller.CountFileLinesController");
 	}
 	
 	/**
@@ -71,17 +103,8 @@ public final class ContextMenuFactory {
 	 */
 	private static final void addTest(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
-		MenuItem countMenuItem = new MenuItem("Test analysis");
-	    countMenuItem.setOnAction((ActionEvent t) -> {        	
-	    	t.consume();
-	    	FileTreeItem fileTreeItem = (FileTreeItem) cell.getTreeItem();
-	    	cell.fireEvent(
-	        		new NGSEPAnalyzeFileEvent(
-	        				"application.controller.TestAnalysisController",
-	        				fileTreeItem.getFile())
-	        		);
-	    });
-	    contextMenu.getItems().add(countMenuItem);
+		addSimpleMenuItem(contextMenu, cell, "Test analysis",
+				"application.controller.TestAnalysisController");
 	}
 	
 	/**

@@ -3,7 +3,6 @@
  */
 package application.concurrent;
 
-import application.controller.TestAnalysisController;
 import javafx.concurrent.Task;
 import ngsep.main.ProgressNotifier;
 

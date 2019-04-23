@@ -6,7 +6,6 @@ package application.event;
 import java.io.File;
 
 import javafx.event.EventType;
-import ngsep.main.ProgressNotifier;
 
 /**
  * {@link NGSEPEvent} for file analysis.

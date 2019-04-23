@@ -13,12 +13,12 @@
 styleClass="prog-bar-box">
 	<GridPane styleClass="prog-bar-labels-grid-pane">
 		<Text fx:id="taskNameText" GridPane.columnIndex="0"
-		GridPane.rowIndex="0"> Tarea 1</Text>
+		GridPane.rowIndex="0"></Text>
 		<Text fx:id="fileNameText" GridPane.columnIndex="1"
-		GridPane.rowIndex="0" GridPane.columnSpan="2">Archivo 1</Text>
+		GridPane.rowIndex="0" GridPane.columnSpan="2"></Text>
 	</GridPane>
 	<HBox styleClass="prog-bar-labels-box">
-		<ProgressBar fx:id="taskProgressBar" progress="0.1f"/>
+		<ProgressBar fx:id="taskProgressBar"/>
 		<Button onAction="#cancelProcess">
 			<graphic>
 				<ImageView>

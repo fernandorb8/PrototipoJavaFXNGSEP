@@ -1,24 +1,16 @@
-package application.view;
+package application.view.component;
 
-import java.beans.SimpleBeanInfo;
 import java.io.IOException;
 
-import application.event.NGSEPAnalyzeFileEvent;
-import application.event.NGSEPExecuteTaksEvent;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import ngsep.main.ProgressNotifier;
 
 /**
  * A custom component with a {@link ProgressBar} for the application.

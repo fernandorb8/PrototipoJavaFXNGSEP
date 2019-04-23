@@ -9,13 +9,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 
-import application.controller.fileexplorer.FileTreeItem;
 import application.concurrent.NGSEPTask;
 import application.controller.fileexplorer.FileExplorerTreeCell;
+import application.controller.fileexplorer.FileTreeItem;
 import application.event.NGSEPEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
-import ngsep.main.ProgressNotifier;
 
 /**
  * Test controller demonstrating the use on {@link AnalysisAreaController}.
