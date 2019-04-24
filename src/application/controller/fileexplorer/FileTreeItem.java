@@ -207,4 +207,18 @@ public class FileTreeItem extends TreeItem<String> {
 		}
 		return FXCollections.emptyObservableList();
 	}
+	
+	public void refresh() {
+		ObservableList<FileTreeItem> children = buildChildren(this);
+		if (children.size() != getChildren().size()) {
+			super.getChildren().setAll(buildChildren(this));
+		}
+		for (TreeItem<String> treeItem : getChildren()) {
+			FileTreeItem child = (FileTreeItem) treeItem;
+			if (!child.isFirstTimeChildren) {
+				child.refresh();
+			}
+			
+		}
+	}
 }

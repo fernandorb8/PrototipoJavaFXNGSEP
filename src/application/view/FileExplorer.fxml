@@ -13,6 +13,8 @@ fx:controller="application.controller.fileexplorer.FileExplorerController">
 		<Menu text="Explorer">
 			<MenuItem text="Change folder" 
 			onAction="#changeDir"/>
+			<MenuItem text="Refresh" 
+			onAction="#refresh"/>
 		</Menu>
 	</MenuBar>
 	<TreeView fx:id="treeviewFileBrowse"  id="tree-view" VBox.vgrow="ALWAYS"/>

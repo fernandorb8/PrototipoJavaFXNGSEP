@@ -3,6 +3,7 @@
  */
 package application.controller;
 
+import application.event.NGSEPRefreshFileExplorerEvent;
 import application.view.component.ProgressBarComponent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -46,6 +47,7 @@ public class ProgressBarController {
 							task.cancel();
 						}
 						VBox parent = (VBox) progressBarComponent.getParent();
+						parent.fireEvent(new NGSEPRefreshFileExplorerEvent());
 						parent.getChildren().remove(progressBarComponent);
 					}	
 				}
@@ -67,6 +69,7 @@ public class ProgressBarController {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				VBox parent = (VBox) progressBarComponent.getParent();
+				parent.fireEvent(new NGSEPRefreshFileExplorerEvent());
 				parent.getChildren().remove(progressBarComponent);
 			}
 		});

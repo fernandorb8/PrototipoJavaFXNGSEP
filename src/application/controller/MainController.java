@@ -20,6 +20,7 @@ import application.controller.fileexplorer.FileExplorerController;
 import application.event.NGSEPAnalyzeFileEvent;
 import application.event.NGSEPEvent;
 import application.event.NGSEPExecuteTaksEvent;
+import application.event.NGSEPRefreshFileExplorerEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -59,6 +60,8 @@ public class MainController {
 				, this::handleNGSEPAnalyzeFileEvent);
 		rootBorderPane.addEventHandler(NGSEPExecuteTaksEvent.EXECUTE_TASK
 				, this::handleNGSEPExecuteTaskEvent);
+		rootBorderPane.addEventHandler(NGSEPRefreshFileExplorerEvent.REFRESH
+				, this::handleNGSEPRefreshFileExplorerEvent);
 		
 	}
 	
@@ -99,6 +102,11 @@ public class MainController {
 		progressBarAreaController.addProgressBarComponentForTask(event.task);
 		ExecutorService executor = ExecutorSingleton.getExecutor();
 		executor.submit(event.task);
+	}
+	
+	private void handleNGSEPRefreshFileExplorerEvent(NGSEPRefreshFileExplorerEvent
+			event) {
+		fileExplorerController.refresh(null);
 	}
 
 }

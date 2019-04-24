@@ -21,6 +21,8 @@ import javafx.stage.DirectoryChooser;
  *
  */
 public class FileExplorerController {
+	
+	//FXML parameters.
 
 	@FXML
 	private TreeView<String> treeviewFileBrowse;
@@ -72,6 +74,8 @@ public class FileExplorerController {
 		this.treeviewFileBrowse.setRoot(rootNode);
 	}
 	
+	//FXML methods.
+	
 	/**
 	 * Change de root node to the desired directory.
 	 * @param ae {@link ActionEvent} not in use.
@@ -89,5 +93,9 @@ public class FileExplorerController {
 		}
 	}
 	
+	@FXML
+	public void refresh(ActionEvent ae) {
+		((FileTreeItem) treeviewFileBrowse.getRoot()).refresh();
+	}
 
 }
