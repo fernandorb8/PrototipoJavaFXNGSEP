@@ -100,6 +100,10 @@ public class MainController {
 	 */
 	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
 		progressBarAreaController.addProgressBarComponentForTask(event.task);
+		
+		BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
+		analysisArea.setCenter(null);
+		
 		ExecutorService executor = ExecutorSingleton.getExecutor();
 		executor.submit(event.task);
 	}

@@ -15,13 +15,33 @@ import ngsep.main.ProgressNotifier;
  *
  */
 public abstract class NGSEPTask<V> extends Task<V> implements ProgressNotifier{
+	
+	// Attributes.
+	
+	private int maxProgress = 100;
 		
-	// ProgressNotifier
+	// ProgressNotifier.
 	
 	@Override
 	public boolean keepRunning(int progress) {
-		super.updateProgress(progress, 100);
+		super.updateProgress(progress, maxProgress);
 		return !super.isCancelled();
+	}
+	
+	// Getters and setters.
+
+	/**
+	 * @return the maxProgress
+	 */
+	public int getMaxProgress() {
+		return maxProgress;
+	}
+
+	/**
+	 * @param maxProgress the maxProgress to set
+	 */
+	public void setMaxProgress(int maxProgress) {
+		this.maxProgress = maxProgress;
 	}
 
 }
