@@ -4,7 +4,6 @@
 package ngsepfx.controller.validator;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * @author fernando
@@ -12,44 +11,46 @@ import java.util.ArrayList;
  */
 public class Validator{
 	
-	public static boolean validate(ValidationEnum[] validators, String value, 
-			ArrayList<String> errorMessages) {
-		boolean isValid = true;
-		boolean isValidatorValid;
+	public static ValidationError validate(
+			ValidationEnum[] validators, String value, 
+			String section) {
+		ValidationError validationError = null;
+		String error = null;
 		for (ValidationEnum validator : validators) {
-			isValidatorValid = validateValidator(validator, value, 
-					errorMessages);
-			isValid = isValid && isValidatorValid;
+			error = validateValidator(validator, value);
+			if (error != null) {
+				if (validationError == null) {
+					validationError = new ValidationError(section);
+					validationError.setSection(section);	
+				}
+				validationError.addError(error);
+			}
 		}
-		return isValid;
+		return validationError;
 	}
 
-	private static boolean validateValidator(ValidationEnum validator, String
-			value, ArrayList<String> errorMessages) {
+	private static String validateValidator(ValidationEnum validator
+			, String value) {
 		if (validator == ValidationEnum.INPUT_FILE) {
 			File file = new File(value);
 			if (file.exists()) {					
-				return true;
+				return null;
 			} 
-			errorMessages.add("File doesn't exist: " + value);
-			return false;
+			return "File doesn't exist: " + value;
 			
 		} 
 		else if (validator == ValidationEnum.OUTPUT_DIR) {
-			boolean isValido = true;
 			File file = new File(value);
 			File dir = file.getParentFile();
 			if (!dir.exists()) {					
-				isValido = false;
-				errorMessages.add("Directory doesn't exist: " + file.getParent());
+				return "Directory doesn't exist: " + file.getParent();
 			} 
 			else if (!dir.canWrite()) {
-				isValido = false;
-				errorMessages.add("Missing write permissions for  "
-						+ "directory: " + file.getParent());
+				return "Missing write permissions for  "
+						+ "directory: " + file.getParent();
 			}
 			
-			return isValido;
+			return null;
 			
 		} 
 		else if (validator == ValidationEnum.INT){
@@ -57,55 +58,27 @@ public class Validator{
 				int number = 0;
 				number = Integer.parseInt(value);
 				if ((number % 1) == 0) {
-					return true;
+					return null;
 				}
 			} catch (NumberFormatException e) {
 				
 			}
-			errorMessages.add(value + " is not an integer.");
-			return false;
+			return value + " is not an integer.";
 		}  
 		else if (validator == ValidationEnum.POSITIVE_NUMBER) {
 			try {
 				double number = 0;
 				number = Double.parseDouble(value);
 				if (number >= 0) {
-					return true;
+					return null;
 				}
 			} catch (NumberFormatException e) {
 				
 			}
-			errorMessages.add(value + " is not a positive number.");
-			return false;
+			return value + " is not a positive number.";
 		}
 		else {
-			try {
-				throw new Exception("Unknown validator: " + validator);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-	}
-	
-	public static boolean validate(ValidationEnum[] validators, String value, 
-			StringBuilder errorsMessage, String errorsHeader) {
-		ArrayList<String> errors = new ArrayList<String>();
-		boolean isFieldValid = 
-				Validator.validate(validators
-						, value, errors);
-		if (!isFieldValid) {
-			addErrorsWithHeader(
-					errorsHeader, errors, errorsMessage);
-		}
-		return isFieldValid;
-	}
-	
-	private static void addErrorsWithHeader(String header
-			, ArrayList<String> errors, StringBuilder errorsMessage) {
-		errorsMessage.append(header + System.lineSeparator());
-		for (String string : errors) {
-			errorsMessage.append("\t" +  string + System.lineSeparator());
+			throw new RuntimeException("Unknown validator: " + validator);
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import ngsep.vcf.VCFSummaryStatisticsCalculator;
 import ngsepfx.concurrent.NGSEPTask;
+import ngsepfx.controller.validator.ValidationError;
+import ngsepfx.controller.validator.ValidationErrorUtils;
 import ngsepfx.controller.validator.Validator;
 import ngsepfx.event.NGSEPAnalyzeFileEvent;
 import ngsepfx.event.NGSEPEvent;
@@ -37,7 +40,7 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 	
 	//Parameters.
 	
-	private StringBuilder errorsMessage = new StringBuilder(); 
+	private String errorsMessage; 
 	
 	//FXML parameters.
 	
@@ -160,7 +163,7 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 			expContent.setMaxWidth(Double.MAX_VALUE);
 			expContent.add(textArea, 0, 0);
 
-			alert.setTitle("Error");
+			alert.setTitle("ValidationError");
 			alert.setHeaderText("Errors in one or more fields");
 			alert.setContentText("Errors in one or more fields");
 			alert.initModality(Modality.NONE);
@@ -169,40 +172,48 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 
 			alert.show();
 			
-			errorsMessage = new StringBuilder();
+			errorsMessage = null;
 		}
 	}
 	
 	private boolean validateFields() {
 		boolean areFieldsValid = true;
-		boolean isFieldValid;
-		isFieldValid = Validator.validate(inputVCFFileValidatedTextField.getValidators()
-				, inputVCFFileValidatedTextField.getText(), errorsMessage
+		ArrayList<ValidationError> errorsArray = new ArrayList<>();
+		ValidationError error = Validator.validate(
+				inputVCFFileValidatedTextField.getValidators()
+				, inputVCFFileValidatedTextField.getText()
 				, inputVCFFileValidatedTextField.getLabel().getText());
-		if (!isFieldValid) {
+		if (error != null) {
 			inputVCFFileValidatedTextField.getStyleClass().add("error");
+			areFieldsValid = false;
+			errorsArray.add(error);
 		} else {
 			inputVCFFileValidatedTextField.getStyleClass().remove("error");
 		}
-		areFieldsValid = areFieldsValid && isFieldValid;
-		isFieldValid = Validator.validate(outputFileValidatedTextField.getValidators()
-				, outputFileValidatedTextField.getText(), errorsMessage
+		error = Validator.validate(
+				outputFileValidatedTextField.getValidators()
+				, outputFileValidatedTextField.getText()
 				, outputFileValidatedTextField.getLabel().getText());
-		if (!isFieldValid) {
+		if (error != null) {
 			outputFileValidatedTextField.getStyleClass().add("error");
+			areFieldsValid = false;
+			errorsArray.add(error);
 		} else {
 			outputFileValidatedTextField.getStyleClass().remove("error");
 		}
-		areFieldsValid = areFieldsValid && isFieldValid;
-		isFieldValid = Validator.validate(minimumSamplesValidatedTextField.getValidators()
-				, minimumSamplesValidatedTextField.getText(), errorsMessage
+		error = Validator.validate(
+				minimumSamplesValidatedTextField.getValidators()
+				, minimumSamplesValidatedTextField.getText()
 				, minimumSamplesValidatedTextField.getLabel().getText());
-		if (!isFieldValid) {
+		if (error != null) {
 			minimumSamplesValidatedTextField.getStyleClass().add("error");
+			areFieldsValid = false;
+			errorsArray.add(error);
 		} else {
 			minimumSamplesValidatedTextField.getStyleClass().remove("error");
 		}
-		areFieldsValid = areFieldsValid && isFieldValid;
+		
+		errorsMessage = ValidationErrorUtils.toHierarchichalString(errorsArray);
 		
 		return areFieldsValid;
 	}
