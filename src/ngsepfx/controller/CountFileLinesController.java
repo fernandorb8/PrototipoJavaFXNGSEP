@@ -11,7 +11,6 @@ import java.net.URL;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
-import ngsepfx.concurrent.NGSEPTask;
 import ngsepfx.controller.fileexplorer.FileExplorerTreeCell;
 import ngsepfx.controller.fileexplorer.FileTreeItem;
 import ngsepfx.event.NGSEPEvent;
@@ -63,14 +62,6 @@ public class CountFileLinesController extends AnalysisAreaController {
 			while (bufferedReader.readLine() != null) lines++;
 			bufferedReader.close();
 			numberLinesText.setText(lines + "");
-			executeTask(new NGSEPTask<Void>() {
-				@Override
-				protected Void call() throws Exception {
-					// TODO Auto-generated method stub
-					keepRunning(100);
-					return null;
-				}
-			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

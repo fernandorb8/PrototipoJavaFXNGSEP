@@ -168,7 +168,7 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 			alert.setContentText("Errors in one or more fields");
 			alert.initModality(Modality.NONE);
 			alert.getDialogPane().setExpandableContent(expContent);		
-			
+			alert.getDialogPane().expandedProperty().set(true);
 
 			alert.show();
 			
