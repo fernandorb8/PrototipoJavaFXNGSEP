@@ -125,8 +125,7 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 				
 	    		@Override 
 	    		public Void call() {
-	    			PrintStream out = null;
-	    			try {
+	    			try (PrintStream out = new PrintStream(outputFileValidatedTextField.getText())) {
 	    				updateMessage(inputVCFFileValidatedTextField.getText());
 	    				updateTitle(VCFSummaryStatistics.TASK_NAME);
 	    				VCFSummaryStatisticsCalculator instance = new VCFSummaryStatisticsCalculator();
@@ -134,7 +133,6 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 	    				instance.setMinSamplesGenotyped(
 	    						Integer.parseInt(
 	    								minimumSamplesValidatedTextField.getText()));
-	    				out = new PrintStream(outputFileValidatedTextField.getText());
 	    				instance.runStatistics(
 	    						inputVCFFileValidatedTextField.getText(), 
 	    						out);
@@ -144,12 +142,7 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 	    						+ " could not open one of the files " 
 	    						+ inputVCFFileValidatedTextField.getText()
 	    						+ outputFileValidatedTextField.getText());
-	    			} finally {
-	    				if (out != null) {
-	    					out.flush();
-	    					out.close();
-	    				}
-					}
+	    			} 
 	    			return null;
 	    		}
 			});
@@ -186,14 +179,29 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 		isFieldValid = Validator.validate(inputVCFFileValidatedTextField.getValidators()
 				, inputVCFFileValidatedTextField.getText(), errorsMessage
 				, inputVCFFileValidatedTextField.getLabel().getText());
+		if (!isFieldValid) {
+			inputVCFFileValidatedTextField.getStyleClass().add("error");
+		} else {
+			inputVCFFileValidatedTextField.getStyleClass().remove("error");
+		}
 		areFieldsValid = areFieldsValid && isFieldValid;
 		isFieldValid = Validator.validate(outputFileValidatedTextField.getValidators()
 				, outputFileValidatedTextField.getText(), errorsMessage
 				, outputFileValidatedTextField.getLabel().getText());
+		if (!isFieldValid) {
+			outputFileValidatedTextField.getStyleClass().add("error");
+		} else {
+			outputFileValidatedTextField.getStyleClass().remove("error");
+		}
 		areFieldsValid = areFieldsValid && isFieldValid;
 		isFieldValid = Validator.validate(minimumSamplesValidatedTextField.getValidators()
 				, minimumSamplesValidatedTextField.getText(), errorsMessage
 				, minimumSamplesValidatedTextField.getLabel().getText());
+		if (!isFieldValid) {
+			minimumSamplesValidatedTextField.getStyleClass().add("error");
+		} else {
+			minimumSamplesValidatedTextField.getStyleClass().remove("error");
+		}
 		areFieldsValid = areFieldsValid && isFieldValid;
 		
 		return areFieldsValid;

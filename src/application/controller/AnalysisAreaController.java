@@ -49,6 +49,7 @@ public abstract class AnalysisAreaController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new RuntimeException("Error loading .fxml", e);
 		}
 	}
 	
