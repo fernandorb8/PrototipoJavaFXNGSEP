@@ -37,3 +37,32 @@
     -fx-background-radius: 3, 2, 4, 0;
     -fx-prompt-text-fill: transparent;
 }
+
+/* Common layout clases styling */
+
+ 
+.grid-pane {
+	-fx-hgap: 10;
+	-fx-vgap: 10;
+}
+
+ 
+.hbox {
+	-fx-spacing: 10;
+	-fx-alignment: center-left;
+}
+
+.vbox {
+	-fx-spacing: 10;
+}
+
+/* Common control styling */
+
+.file-input {
+	-fx-pref-width: 500;
+}
+
+.small-number-input {
+	-fx-pref-width: 50;
+	-fx-max-width: 50;
+}

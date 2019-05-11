@@ -4,10 +4,7 @@
 	-fx-fill-width:true;
 }
 
-.grid_pane {
-	-fx-hgap: 10;
-    -fx-vgap: 10;
-}
+
 
 /*
 .vbox_style {
@@ -18,15 +15,7 @@
     
  }
  */
- 
- .hbox {
-    -fx-spacing: 10;
-	-fx-alignment: center-left;
- }
- 
- .second-col {
- 	-fx-pref-width: 500;
- }
+
  
 
  

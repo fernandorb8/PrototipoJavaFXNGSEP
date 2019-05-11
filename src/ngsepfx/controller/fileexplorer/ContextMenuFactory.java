@@ -40,10 +40,17 @@ public final class ContextMenuFactory {
 	    	addTest(contextMenu, cell);
 	    	addTest2(contextMenu, cell);
 	    	addVCFSummaryStatistics(contextMenu, cell);
+	    	addVCFFilter(contextMenu, cell);
 	    }
 	    return contextMenu;
 	}
 	
+	private static void addVCFFilter(ContextMenu contextMenu
+			, FileExplorerTreeCell cell) {
+		addSimpleMenuItem(contextMenu, cell, "VCF Filter",
+				"ngsepfx.controller.VCFFilterController");
+	}
+
 	/**
 	 * Add the {@link MenuItem} for VCFSummary Statistics.
 	 * @param contextMenu {@link ContextMenu} to be modified.
@@ -53,7 +60,7 @@ public final class ContextMenuFactory {
 	private static final void addVCFSummaryStatistics(ContextMenu contextMenu, 
 			FileExplorerTreeCell cell) {
 		addSimpleMenuItem(contextMenu, cell, "VCF Summary Statistics",
-				"ngsepfx.controller.VCFSummaryStatistics");
+				"ngsepfx.controller.VCFSummaryStatisticsController");
 	}
 
 	/**

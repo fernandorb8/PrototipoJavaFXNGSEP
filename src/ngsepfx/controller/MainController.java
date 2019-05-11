@@ -56,11 +56,11 @@ public class MainController {
 	@FXML
 	private void initialize() {
 		
-		rootBorderPane.addEventHandler(NGSEPAnalyzeFileEvent.FILE
+		rootBorderPane.addEventFilter(NGSEPAnalyzeFileEvent.FILE
 				, this::handleNGSEPAnalyzeFileEvent);
-		rootBorderPane.addEventHandler(NGSEPExecuteTaksEvent.EXECUTE_TASK
+		rootBorderPane.addEventFilter(NGSEPExecuteTaksEvent.EXECUTE_TASK
 				, this::handleNGSEPExecuteTaskEvent);
-		rootBorderPane.addEventHandler(NGSEPRefreshFileExplorerEvent.REFRESH
+		rootBorderPane.addEventFilter(NGSEPRefreshFileExplorerEvent.REFRESH
 				, this::handleNGSEPRefreshFileExplorerEvent);
 		
 	}
@@ -75,6 +75,7 @@ public class MainController {
 	 */
 	private void handleNGSEPAnalyzeFileEvent(NGSEPAnalyzeFileEvent event) {
 		try {
+			event.consume();
 			controller = (AnalysisAreaController)
 					Class.forName(
 							event.controllerFullyQualifiedName
@@ -93,12 +94,13 @@ public class MainController {
 	}
 	
 	/**
-	 * Receive the task to be passed to the Executor and assing it to a
+	 * Receive the task to be passed to the Executor and assign it to a
 	 * {@link ProgressBarController}.
 	 * @param event {@link NGSEPExecuteTaksEvent} containing the {@link Runnable}
 	 * task.
 	 */
 	private void handleNGSEPExecuteTaskEvent(NGSEPExecuteTaksEvent event) {
+		event.consume();
 		progressBarAreaController.addProgressBarComponentForTask(event.task);
 		
 		BorderPane analysisArea = (BorderPane) rootBorderPane.getCenter();
@@ -110,6 +112,7 @@ public class MainController {
 	
 	private void handleNGSEPRefreshFileExplorerEvent(NGSEPRefreshFileExplorerEvent
 			event) {
+		event.consume();
 		fileExplorerController.refresh(null);
 	}
 

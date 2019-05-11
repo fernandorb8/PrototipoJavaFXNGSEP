@@ -32,7 +32,7 @@ import ngsepfx.view.component.ValidatedTextField;
  * @author fernando
  *
  */
-public class VCFSummaryStatistics extends AnalysisAreaController {
+public class VCFSummaryStatisticsController extends AnalysisAreaController {
 	
 	//Constants.
 	
@@ -130,7 +130,7 @@ public class VCFSummaryStatistics extends AnalysisAreaController {
 	    		public Void call() {
 	    			try (PrintStream out = new PrintStream(outputFileValidatedTextField.getText())) {
 	    				updateMessage(inputVCFFileValidatedTextField.getText());
-	    				updateTitle(VCFSummaryStatistics.TASK_NAME);
+	    				updateTitle(VCFSummaryStatisticsController.TASK_NAME);
 	    				VCFSummaryStatisticsCalculator instance = new VCFSummaryStatisticsCalculator();
 	    				instance.setProgressNotifier(this);
 	    				instance.setMinSamplesGenotyped(

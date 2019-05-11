@@ -10,14 +10,14 @@
 <?import ngsepfx.view.component.ValidatedTextField?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" id="mainContainer">
-	<GridPane styleClass="grid_pane">
+	<GridPane styleClass="grid-pane">
 		<Label fx:id="inputVCFFileLabel" GridPane.rowIndex="0" 
 			GridPane.columnIndex="0"
 			>(*) Input VCF File:</Label>
 		<ValidatedTextField fx:id="inputVCFFileValidatedTextField" 
 			label="$inputVCFFileLabel"
 			GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="3"
-			validators="INPUT_FILE" styleClass="second-col"/>
+			validators="INPUT_FILE" styleClass="file-input"/>
 		<Button onAction="#changeInputVCFFile" text="..." GridPane.rowIndex="0" 
 			GridPane.columnIndex="4"/>
 		<Label fx:id="outputFileLabel" GridPane.rowIndex="1" 
