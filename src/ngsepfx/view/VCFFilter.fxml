@@ -23,65 +23,106 @@
 					<VBox styleClass="vbox">
 						<GridPane styleClass="grid-pane" >			
 							<Label GridPane.rowIndex="0" GridPane.columnIndex="0"
-								>(*) File: </Label>
+								fx:id="fileLabel" >(*) File: </Label>
 							<ValidatedTextField GridPane.rowIndex="0" GridPane.columnIndex="1"
-								styleClass="file-input"/>
-							<Button GridPane.rowIndex="0" GridPane.columnIndex="2" text="..."/>
-							<Label GridPane.rowIndex="1" GridPane.columnIndex="0" >(*) Output File: </Label>
-							<ValidatedTextField GridPane.rowIndex="1" GridPane.columnIndex="1" />
-							<Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="..."/>
-							<Label GridPane.rowIndex="2" GridPane.columnIndex="0" >Filter Regions From File: </Label>
-							<ValidatedTextField GridPane.rowIndex="2" GridPane.columnIndex="1" />
-							<Button GridPane.rowIndex="2" GridPane.columnIndex="2" text="..."/>
-							<Label GridPane.rowIndex="3" GridPane.columnIndex="0" >Select Regions From File: </Label>
-							<ValidatedTextField GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-							<Button GridPane.rowIndex="3" GridPane.columnIndex="2" text="..."/>
+								styleClass="file-input" fx:id="fileValidatedTextField" 
+								label="$fileLabel"/>
+							<Button GridPane.rowIndex="0" GridPane.columnIndex="2" text="..."
+								onAction="#changeFileInput" userData="$fileValidatedTextField"/>
+							<Label GridPane.rowIndex="1" GridPane.columnIndex="0" 
+								fx:id="outputFileLabel">(*) Output File: </Label>
+							<ValidatedTextField GridPane.rowIndex="1" GridPane.columnIndex="1" 
+								fx:id="outputFileValidatedTextField" label="$outputFileLabel"/>
+							<Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="..."
+								onAction="#changeFileOutput" 
+								userData="$outputFileValidatedTextField"/>
+							<Label GridPane.rowIndex="2" GridPane.columnIndex="0" 
+								fx:id="filterRegionsFileLabel">Filter Regions From File: </Label>
+							<ValidatedTextField GridPane.rowIndex="2" GridPane.columnIndex="1" 
+								fx:id="filterRegionsFileValidatedTextField" 
+								label="$filterRegionsFileLabel"/>
+							<Button GridPane.rowIndex="2" GridPane.columnIndex="2" text="..."
+								onAction="#changeFileInput" 
+								userData="$filterRegionsFileValidatedTextField"/>
+							<Label GridPane.rowIndex="3" GridPane.columnIndex="0" 
+								fx:id="selectRegionsFileLabel">Select Regions From File: </Label>
+							<ValidatedTextField GridPane.rowIndex="3" GridPane.columnIndex="1"
+								fx:id="selectRegionsFileValidatedTextField"
+								label="$selectRegionsFileLabel"/>
+							<Button GridPane.rowIndex="3" GridPane.columnIndex="2" text="..."
+								onAction="#changeFileInput" 
+								userData="$selectRegionsFileValidatedTextField"/>
 						</GridPane>
 						<HBox styleClass="hbox" >
 							<GridPane styleClass="grid-pane" >
-								<Label GridPane.rowIndex="0" GridPane.columnIndex="0">Min distance between variants:</Label>
+								<Label GridPane.rowIndex="0" GridPane.columnIndex="0"
+									fx:id="minDistaceVariantsLabel">Min distance between variants:</Label>
 								<ValidatedTextField GridPane.rowIndex="0" GridPane.columnIndex="1" 
-									styleClass="small-number-input"/>
-								<Label GridPane.rowIndex="1" GridPane.columnIndex="0">MAF:</Label>
+									styleClass="small-number-input"
+									fx:id="minDistanceVariantsValidatedTextField"
+									label="$minDistaceVariantsLabel"/>
+								<Label GridPane.rowIndex="1" GridPane.columnIndex="0"
+									fx:id="mafLabel">MAF:</Label>
 								<HBox GridPane.rowIndex="1" GridPane.columnIndex="1" 
 									styleClass="hbox">
 								 	<Label >Min:</Label>
-								 	<ValidatedTextField styleClass="small-number-input"/>
+								 	<ValidatedTextField styleClass="small-number-input"
+								 		fx:id="minMAFValidatedTextField" label="$mafLabel"/>
 								 	<Label >Max:</Label>
-								 	<ValidatedTextField styleClass="small-number-input"/>
+								 	<ValidatedTextField styleClass="small-number-input"
+								 		fx:id="maxMAFValidatedTextField" label="$mafLabel"/>
 								</HBox>
-								<Label GridPane.rowIndex="2" GridPane.columnIndex="0">Observed Heterozygosity:</Label>
+								<Label GridPane.rowIndex="2" GridPane.columnIndex="0"
+									fx:id="heterozygosityLabel">Observed Heterozygosity:</Label>
 								<HBox GridPane.rowIndex="2" GridPane.columnIndex="1"
 									styleClass="hbox">
 								 	<Label >Min:</Label>
-								 	<ValidatedTextField styleClass="small-number-input"/>
+								 	<ValidatedTextField styleClass="small-number-input"
+								 		fx:id="minHeterozygosityValidatedTextField" 
+								 		label="$heterozygosityLabel"/>
 								 	<Label >Max:</Label>
-								 	<ValidatedTextField styleClass="small-number-input"/>
+								 	<ValidatedTextField styleClass="small-number-input"
+								 		fx:id="maxHeterozygosityValidatedTextField"
+								 		label="$heterozygosityLabel"/>
 								</HBox>
-								<Label GridPane.rowIndex="3" GridPane.columnIndex="0">Min Number of Samples Genotyped:</Label>
+								<Label GridPane.rowIndex="3" GridPane.columnIndex="0"
+									fx:id="minSamplesGenotypedLabel">Min Number of Samples Genotyped:</Label>
 								<ValidatedTextField GridPane.rowIndex="3" GridPane.columnIndex="1" 
-									styleClass="small-number-input"/>
-								<Label GridPane.rowIndex="4" GridPane.columnIndex="0">Maximum Number of Samples With CNVS:</Label>
+									styleClass="small-number-input"
+									fx:id="minSamplesGenotypedValidatedTextField"
+									label="$minSamplesGenotypedLabel"/>
+								<Label GridPane.rowIndex="4" GridPane.columnIndex="0"
+									fx:id="maxSamplesCNVSLabel">Maximum Number of Samples With CNVS:</Label>
 								<ValidatedTextField GridPane.rowIndex="4" GridPane.columnIndex="1" 
-									styleClass="small-number-input"/>
+									styleClass="small-number-input"
+									fx:id="maxSamplesCNVSValidatedTextField"
+									label="$maxSamplesCNVSLabel"/>
 							</GridPane>
 							<VBox styleClass="vbox">								
 								<GridPane styleClass="grid-pane">							
 									<Label GridPane.rowIndex="0" GridPane.columnIndex="0"
-										>Min Quality:</Label>
+										fx:id="minQualityLabel">Min Quality:</Label>
 								 	<ValidatedTextField 
 								 		GridPane.rowIndex="0" GridPane.columnIndex="1"
-								 		styleClass="small-number-input"/>
+								 		styleClass="small-number-input"
+								 		fx:id="minQualityValidatedTextField"
+								 		label="$minQualityLabel"/>
 									<Label GridPane.rowIndex="1" GridPane.columnIndex="0"
-										>Min Coverage:</Label>
+										fx:id="minCoverageLabel">Min Coverage:</Label>
 								 	<ValidatedTextField 
 								 		GridPane.rowIndex="1" GridPane.columnIndex="1"
-								 		styleClass="small-number-input"/>
+								 		styleClass="small-number-input"
+								 		fx:id="minCoverageValidatedTextField"
+								 		label="$minCoverageLabel"/>
 								</GridPane>
-								<CheckBox text="Keep Only Bi Allelic SNVs"/>
-								<CheckBox text="Filter Invariant Sites"/>
-								<CheckBox text="Filter Invariant Alternative"/>
-								<CheckBox text="Filter Invariant Reference"/>						
+								<CheckBox text="Keep Only Bi Allelic SNVs"
+									fx:id="keepBiAllelicSNVsCheckBox"/>
+								<CheckBox text="Filter Invariant Sites"
+									fx:id="filterInvariantSitesCheckBox"/>
+								<CheckBox text="Filter Invariant Alternative"
+									fx:id="filterInvariantAlternativeCheckBox"/>
+								<CheckBox text="Filter Invariant Reference"
+									fx:id="filterInvariantReferenceCheckBox"/>						
 							</VBox>
 						</HBox>
 					</VBox>
@@ -89,24 +130,34 @@
 				<TitledPane text="GC Content Filter">
 					<VBox styleClass="vbox">
 						<HBox styleClass="hbox">
-							<Label>Reference File: </Label>
-							<ValidatedTextField styleClass="file-input"/>
-							<Button text="..."/>							
+							<Label fx:id="referenceFileLabel">Reference File: </Label>
+							<ValidatedTextField styleClass="file-input"
+								fx:id="referenceFileValidatedTextField"
+								label="$referenceFileLabel"/>
+							<Button text="..."
+								onAction="#changeFileInput"
+								userData="$referenceFileValidatedTextField"/>							
 						</HBox>
 						<HBox styleClass="hbox">
-							<Label>GC Content:</Label>
+							<Label fx:id="gcContentLabel">GC Content:</Label>
 							<Label>Min:</Label>
-							<ValidatedTextField styleClass="small-number-input"/>
+							<ValidatedTextField styleClass="small-number-input"
+								fx:id="minGCContentValidatedTextField"
+								label="$gcContentLabel"/>
 							<Label>Max:</Label>
-							<ValidatedTextField styleClass="small-number-input"/>						
+							<ValidatedTextField styleClass="small-number-input"
+								fx:id="maxGCContentValidatedTextField"
+								label="$gcContentLabel"/>						
 						</HBox>
 					</VBox>
 				</TitledPane>
 				<TitledPane text="Functional Filter">
 					<VBox styleClass="vbox">
 						<HBox styleClass="hbox">
-							<Label>Gene Name: </Label>
-							<ValidatedTextField />						
+							<Label fx:id="geneNameLabel">Gene Name: </Label>
+							<ValidatedTextField 
+								fx:id="geneNameValidatedTextField"
+								label="$geneNameLabel"/>						
 						</HBox>
 						<HBox styleClass="hbox, hbox-t-l">	
 							<Label>Functional Role:</Label>		
@@ -114,25 +165,44 @@
 								<Label>Annotation</Label>
 								<ScrollPane >
 									<VBox styleClass="vbox-ss">
-										<CheckBox text="synonymous_variant" mnemonicParsing="false"/>
-										<CheckBox text="missense_variant" mnemonicParsing="false"/>
-										<CheckBox text="stop_lost" mnemonicParsing="false"/>
-										<CheckBox text="stop_gained" mnemonicParsing="false"/>
-										<CheckBox text="start_lost" mnemonicParsing="false"/>
-										<CheckBox text="inframe_deletion" mnemonicParsing="false"/>
-										<CheckBox text="inframe_insertion" mnemonicParsing="false"/>
-										<CheckBox text="frameshift_variant" mnemonicParsing="false"/>
-										<CheckBox text="splice_donor_variant" mnemonicParsing="false"/>
-										<CheckBox text="splice_acceptor_variant" mnemonicParsing="false"/>
-										<CheckBox text="exonic_splice_region_variant" mnemonicParsing="false"/>
-										<CheckBox text="splice_region_variant" mnemonicParsing="false"/>
-										<CheckBox text="5_prime_UTR_variant" mnemonicParsing="false"/>
-										<CheckBox text="3_prime_UTR_variant" mnemonicParsing="false"/>
-										<CheckBox text="non_coding_transcript_exon_variant" mnemonicParsing="false"/>
-										<CheckBox text="upstream_transcript_variant" mnemonicParsing="false"/>
-										<CheckBox text="downstream_transcript_variant" mnemonicParsing="false"/>
-										<CheckBox text="intron_variant" mnemonicParsing="false"/>
-										<CheckBox text="intergenic_variant" mnemonicParsing="false"/>
+										<CheckBox text="synonymous_variant" mnemonicParsing="false"
+											fx:id="synonymousVariantCheckbox"/>
+										<CheckBox text="missense_variant" mnemonicParsing="false"
+											fx:id="missenseVariantCheckbox"/>
+										<CheckBox text="stop_lost" mnemonicParsing="false"
+											fx:id="stopLostCheckbox"/>
+										<CheckBox text="stop_gained" mnemonicParsing="false"
+											fx:id="stopGainedCheckbox"/>
+										<CheckBox text="start_lost" mnemonicParsing="false"
+											fx:id="startLostCheckbox"/>
+										<CheckBox text="inframe_deletion" mnemonicParsing="false"
+											fx:id="inframeDeletionCheckbox"/>
+										<CheckBox text="inframe_insertion" mnemonicParsing="false"
+											fx:id="inframeInsertionCheckbox"/>
+										<CheckBox text="frameshift_variant" mnemonicParsing="false"
+											fx:id="frameshiftVariantCheckbox"/>
+										<CheckBox text="splice_donor_variant" mnemonicParsing="false"
+											fx:id="spliceDonorVariantCheckbox"/>
+										<CheckBox text="splice_acceptor_variant" mnemonicParsing="false"
+											fx:id="spliceAcceptorVariantCheckbox"/>
+										<CheckBox text="exonic_splice_region_variant" mnemonicParsing="false"
+											fx:id="exonicSpliceRegionVariantCheckbox"/>
+										<CheckBox text="splice_region_variant" mnemonicParsing="false"
+											fx:id="spliceRegionVariantCheckbox"/>
+										<CheckBox text="5_prime_UTR_variant" mnemonicParsing="false"
+											fx:id="FivePrimeUTRVariantCheckbox"/>
+										<CheckBox text="3_prime_UTR_variant" mnemonicParsing="false"
+											fx:id="ThreePrimeUTRVariantCheckbox"/>
+										<CheckBox text="non_coding_transcript_exon_variant" mnemonicParsing="false"
+											fx:id="nonCodingTranscriptExonVariantCheckbox"/>
+										<CheckBox text="upstream_transcript_variant" mnemonicParsing="false"
+											fx:id="upstreamTranscriptVariantCheckbox"/>
+										<CheckBox text="downstream_transcript_variant" mnemonicParsing="false"
+											fx:id="downstreamTranscriptVariantCheckbox"/>
+										<CheckBox text="intron_variant" mnemonicParsing="false"
+											fx:id="intronVariantCheckbox"/>
+										<CheckBox text="intergenic_variant" mnemonicParsing="false"
+											fx:id="intergenicVariantCheckbox"/>
 									</VBox>
 								</ScrollPane>
 							</VBox>		
@@ -141,7 +211,7 @@
 				</TitledPane>
 				<TitledPane text="Sample Selection">
 					<HBox styleClass="hbox, hbox-t-l">
-						<ComboBox value="$initComboBoxOption">
+						<ComboBox value="$initComboBoxOption" fx:id="sampleSelectionComboBox">
 							<items>
 								<FXCollections fx:factory="observableArrayList">
 									<String fx:id="initComboBoxOption" fx:value="File of Samples to Filter" />
@@ -149,8 +219,12 @@
 								</FXCollections>
 							</items>
 						</ComboBox>
-						<ValidatedTextField styleClass="file-input"/>
-						<Button text="..."/>							
+							<ValidatedTextField styleClass="file-input"
+								fx:id="sampleSelectionInput">
+							</ValidatedTextField>
+						<Button text="..."
+							onAction="#changeFileInputSampleSelection"
+							userData="$sampleSelectionInput" />							
 					</HBox>
 				</TitledPane>
 			</panes>
