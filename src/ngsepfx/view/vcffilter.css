@@ -6,4 +6,7 @@
 	-fx-spacing: 5;
 }
  
+.button-hbox {
+	-fx-padding:10;
+} 
  

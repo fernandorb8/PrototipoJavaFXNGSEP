@@ -231,9 +231,8 @@
 		</Accordion>
 	</center>
 	<bottom>
-		<HBox>
+		<HBox styleClass="hbox, button-hbox">
 			<Button text="Filter"/>
-			<Button text="Cancel"/>
 		</HBox>
 	</bottom>
 </BorderPane>

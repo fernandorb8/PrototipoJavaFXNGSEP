@@ -3,6 +3,7 @@
  */
 package ngsepfx.controller;
 
+import java.io.File;
 import java.net.URL;
 
 import javafx.event.ActionEvent;
@@ -206,8 +207,8 @@ public class VCFFilterController extends AnalysisAreaController {
 		Node node = (Node) event.getSource() ;
 		ValidatedTextField validatedTextField = (ValidatedTextField)
 				node.getUserData();
-		Utils.changeFileOutput(validatedTextField, validatedTextField.getLabel()
-				.getText());
+		File file = new File(fileValidatedTextField.getText());
+		Utils.changeFileOutput(validatedTextField, file.getName(), "_filter.vcf");
 	}
 	
 

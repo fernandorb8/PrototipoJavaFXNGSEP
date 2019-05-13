@@ -27,17 +27,14 @@ public class Utils {
 	}
 	
 	public static void changeFileOutput(ValidatedTextField validatedTextField,
-			String suffix) {
+			String fileName, String suffix) {
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		chooser.setTitle("Select output directory");
 		File selectedDirectory = chooser.showDialog(null);
 		if (selectedDirectory != null) {
-			File file = new File(validatedTextField.getText());
-			int extensionIndex = file.getName().lastIndexOf('.');
-			String extensionlessName = file.getName().substring(0, extensionIndex);
 			String newFileName = selectedDirectory.getAbsolutePath() 
-					+ File.separator + extensionlessName + suffix + ".txt";
+					+ File.separator + fileName + suffix;
 			validatedTextField.setText(newFileName);
 		}
 	}
