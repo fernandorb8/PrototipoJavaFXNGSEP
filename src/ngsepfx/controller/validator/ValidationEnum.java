@@ -11,5 +11,6 @@ public enum ValidationEnum {
 	INPUT_FILE,
 	OUTPUT_DIR,
 	POSITIVE_NUMBER,
-	INT;
+	INT,
+	MANDATORY;
 }

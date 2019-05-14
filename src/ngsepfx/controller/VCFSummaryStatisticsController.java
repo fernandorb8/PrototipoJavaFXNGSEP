@@ -11,14 +11,8 @@ import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import ngsep.vcf.VCFSummaryStatisticsCalculator;
 import ngsepfx.concurrent.NGSEPTask;
 import ngsepfx.controller.validator.ValidationError;
@@ -150,27 +144,7 @@ public class VCFSummaryStatisticsController extends AnalysisAreaController {
 	    		}
 			});
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			
-			TextArea textArea = new TextArea(errorsMessage.toString());
-			textArea.setEditable(false);
-			textArea.setMaxWidth(Double.MAX_VALUE);
-			textArea.setMaxHeight(Double.MAX_VALUE);
-			GridPane.setVgrow(textArea, Priority.ALWAYS);
-			GridPane.setHgrow(textArea, Priority.ALWAYS);
-			
-			GridPane expContent = new GridPane();
-			expContent.setMaxWidth(Double.MAX_VALUE);
-			expContent.add(textArea, 0, 0);
-
-			alert.setTitle("ValidationError");
-			alert.setHeaderText("Errors in one or more fields");
-			alert.setContentText("Errors in one or more fields");
-			alert.initModality(Modality.NONE);
-			alert.getDialogPane().setExpandableContent(expContent);		
-			alert.getDialogPane().expandedProperty().set(true);
-
-			alert.show();
+			ControllerUtils.showDefaultErrorDialog(errorsMessage);
 			
 			errorsMessage = null;
 		}
@@ -179,39 +153,13 @@ public class VCFSummaryStatisticsController extends AnalysisAreaController {
 	private boolean validateFields() {
 		boolean areFieldsValid = true;
 		ArrayList<ValidationError> errorsArray = new ArrayList<>();
-		ValidationError error = Validator.validate(
-				inputVCFFileValidatedTextField.getValidators()
-				, inputVCFFileValidatedTextField.getText()
-				, inputVCFFileValidatedTextField.getLabel().getText());
-		if (error != null) {
-			inputVCFFileValidatedTextField.getStyleClass().add("error");
-			areFieldsValid = false;
-			errorsArray.add(error);
-		} else {
-			inputVCFFileValidatedTextField.getStyleClass().remove("error");
-		}
-		error = Validator.validate(
-				outputFileValidatedTextField.getValidators()
-				, outputFileValidatedTextField.getText()
-				, outputFileValidatedTextField.getLabel().getText());
-		if (error != null) {
-			outputFileValidatedTextField.getStyleClass().add("error");
-			areFieldsValid = false;
-			errorsArray.add(error);
-		} else {
-			outputFileValidatedTextField.getStyleClass().remove("error");
-		}
-		error = Validator.validate(
-				minimumSamplesValidatedTextField.getValidators()
-				, minimumSamplesValidatedTextField.getText()
-				, minimumSamplesValidatedTextField.getLabel().getText());
-		if (error != null) {
-			minimumSamplesValidatedTextField.getStyleClass().add("error");
-			areFieldsValid = false;
-			errorsArray.add(error);
-		} else {
-			minimumSamplesValidatedTextField.getStyleClass().remove("error");
-		}
+		
+		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+				inputVCFFileValidatedTextField, errorsArray);
+		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+				outputFileValidatedTextField, errorsArray);
+		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+				minimumSamplesValidatedTextField, errorsArray);
 		
 		errorsMessage = ValidationErrorUtils.toHierarchichalString(errorsArray);
 		

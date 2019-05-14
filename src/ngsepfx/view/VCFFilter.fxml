@@ -26,13 +26,14 @@
 								fx:id="fileLabel" >(*) File: </Label>
 							<ValidatedTextField GridPane.rowIndex="0" GridPane.columnIndex="1"
 								styleClass="file-input" fx:id="fileValidatedTextField" 
-								label="$fileLabel"/>
+								label="$fileLabel" validators="input_file, mandatory"/>
 							<Button GridPane.rowIndex="0" GridPane.columnIndex="2" text="..."
 								onAction="#changeFileInput" userData="$fileValidatedTextField"/>
 							<Label GridPane.rowIndex="1" GridPane.columnIndex="0" 
 								fx:id="outputFileLabel">(*) Output File: </Label>
 							<ValidatedTextField GridPane.rowIndex="1" GridPane.columnIndex="1" 
-								fx:id="outputFileValidatedTextField" label="$outputFileLabel"/>
+								fx:id="outputFileValidatedTextField" label="$outputFileLabel"
+								validators="output_dir, mandatory"/>
 							<Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="..."
 								onAction="#changeFileOutput" 
 								userData="$outputFileValidatedTextField"/>
@@ -40,7 +41,8 @@
 								fx:id="filterRegionsFileLabel">Filter Regions From File: </Label>
 							<ValidatedTextField GridPane.rowIndex="2" GridPane.columnIndex="1" 
 								fx:id="filterRegionsFileValidatedTextField" 
-								label="$filterRegionsFileLabel"/>
+								label="$filterRegionsFileLabel"
+								validators="input_file"/>
 							<Button GridPane.rowIndex="2" GridPane.columnIndex="2" text="..."
 								onAction="#changeFileInput" 
 								userData="$filterRegionsFileValidatedTextField"/>
@@ -48,7 +50,8 @@
 								fx:id="selectRegionsFileLabel">Select Regions From File: </Label>
 							<ValidatedTextField GridPane.rowIndex="3" GridPane.columnIndex="1"
 								fx:id="selectRegionsFileValidatedTextField"
-								label="$selectRegionsFileLabel"/>
+								label="$selectRegionsFileLabel"
+								validators="input_file"/>
 							<Button GridPane.rowIndex="3" GridPane.columnIndex="2" text="..."
 								onAction="#changeFileInput" 
 								userData="$selectRegionsFileValidatedTextField"/>
@@ -60,17 +63,20 @@
 								<ValidatedTextField GridPane.rowIndex="0" GridPane.columnIndex="1" 
 									styleClass="small-number-input"
 									fx:id="minDistanceVariantsValidatedTextField"
-									label="$minDistaceVariantsLabel"/>
+									label="$minDistaceVariantsLabel"
+									validators="positive_number"/>
 								<Label GridPane.rowIndex="1" GridPane.columnIndex="0"
 									fx:id="mafLabel">MAF:</Label>
 								<HBox GridPane.rowIndex="1" GridPane.columnIndex="1" 
 									styleClass="hbox">
 								 	<Label >Min:</Label>
 								 	<ValidatedTextField styleClass="small-number-input"
-								 		fx:id="minMAFValidatedTextField" label="$mafLabel"/>
+								 		fx:id="minMAFValidatedTextField" label="$mafLabel"
+								 		validators="positive_number"/>
 								 	<Label >Max:</Label>
 								 	<ValidatedTextField styleClass="small-number-input"
-								 		fx:id="maxMAFValidatedTextField" label="$mafLabel"/>
+								 		fx:id="maxMAFValidatedTextField" label="$mafLabel"
+								 		validators="positive_number"/>
 								</HBox>
 								<Label GridPane.rowIndex="2" GridPane.columnIndex="0"
 									fx:id="heterozygosityLabel">Observed Heterozygosity:</Label>
@@ -79,24 +85,28 @@
 								 	<Label >Min:</Label>
 								 	<ValidatedTextField styleClass="small-number-input"
 								 		fx:id="minHeterozygosityValidatedTextField" 
-								 		label="$heterozygosityLabel"/>
+								 		label="$heterozygosityLabel"
+								 		validators="positive_number"/>
 								 	<Label >Max:</Label>
 								 	<ValidatedTextField styleClass="small-number-input"
 								 		fx:id="maxHeterozygosityValidatedTextField"
-								 		label="$heterozygosityLabel"/>
+								 		label="$heterozygosityLabel"
+								 		validators="positive_number"/>
 								</HBox>
 								<Label GridPane.rowIndex="3" GridPane.columnIndex="0"
 									fx:id="minSamplesGenotypedLabel">Min Number of Samples Genotyped:</Label>
 								<ValidatedTextField GridPane.rowIndex="3" GridPane.columnIndex="1" 
 									styleClass="small-number-input"
 									fx:id="minSamplesGenotypedValidatedTextField"
-									label="$minSamplesGenotypedLabel"/>
+									label="$minSamplesGenotypedLabel"
+									validators="int, positive_number"/>
 								<Label GridPane.rowIndex="4" GridPane.columnIndex="0"
 									fx:id="maxSamplesCNVSLabel">Maximum Number of Samples With CNVS:</Label>
 								<ValidatedTextField GridPane.rowIndex="4" GridPane.columnIndex="1" 
 									styleClass="small-number-input"
 									fx:id="maxSamplesCNVSValidatedTextField"
-									label="$maxSamplesCNVSLabel"/>
+									label="$maxSamplesCNVSLabel"
+									validators="int, positive_number"/>
 							</GridPane>
 							<VBox styleClass="vbox">								
 								<GridPane styleClass="grid-pane">							
@@ -106,14 +116,16 @@
 								 		GridPane.rowIndex="0" GridPane.columnIndex="1"
 								 		styleClass="small-number-input"
 								 		fx:id="minQualityValidatedTextField"
-								 		label="$minQualityLabel"/>
+								 		label="$minQualityLabel"
+								 		validators="positive_number"/>
 									<Label GridPane.rowIndex="1" GridPane.columnIndex="0"
 										fx:id="minCoverageLabel">Min Coverage:</Label>
 								 	<ValidatedTextField 
 								 		GridPane.rowIndex="1" GridPane.columnIndex="1"
 								 		styleClass="small-number-input"
 								 		fx:id="minCoverageValidatedTextField"
-								 		label="$minCoverageLabel"/>
+								 		label="$minCoverageLabel"
+								 		validators="positive_number"/>
 								</GridPane>
 								<CheckBox text="Keep Only Bi Allelic SNVs"
 									fx:id="keepBiAllelicSNVsCheckBox"/>
@@ -133,7 +145,8 @@
 							<Label fx:id="referenceFileLabel">Reference File: </Label>
 							<ValidatedTextField styleClass="file-input"
 								fx:id="referenceFileValidatedTextField"
-								label="$referenceFileLabel"/>
+								label="$referenceFileLabel"
+								validators="input_file"/>
 							<Button text="..."
 								onAction="#changeFileInput"
 								userData="$referenceFileValidatedTextField"/>							
@@ -143,11 +156,13 @@
 							<Label>Min:</Label>
 							<ValidatedTextField styleClass="small-number-input"
 								fx:id="minGCContentValidatedTextField"
-								label="$gcContentLabel"/>
+								label="$gcContentLabel"
+								validators="positive_number"/>
 							<Label>Max:</Label>
 							<ValidatedTextField styleClass="small-number-input"
 								fx:id="maxGCContentValidatedTextField"
-								label="$gcContentLabel"/>						
+								label="$gcContentLabel"
+								validators="positive_number"/>						
 						</HBox>
 					</VBox>
 				</TitledPane>
@@ -220,7 +235,8 @@
 							</items>
 						</ComboBox>
 							<ValidatedTextField styleClass="file-input"
-								fx:id="sampleSelectionInput">
+								fx:id="sampleSelectionInput"
+								validators="input_file">
 							</ValidatedTextField>
 						<Button text="..."
 							onAction="#changeFileInputSampleSelection"
@@ -232,7 +248,7 @@
 	</center>
 	<bottom>
 		<HBox styleClass="hbox, button-hbox">
-			<Button text="Filter"/>
+			<Button text="Filter" onAction="#startVCFFilter"/>
 		</HBox>
 	</bottom>
 </BorderPane>
