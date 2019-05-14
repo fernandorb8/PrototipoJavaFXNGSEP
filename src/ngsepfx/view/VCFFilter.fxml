@@ -103,7 +103,7 @@
 									label="$minSamplesGenotypedLabel"
 									validators="int, positive_number"/>
 								<Label GridPane.rowIndex="4" GridPane.columnIndex="0"
-									fx:id="maxSamplesCNVSLabel">Maximum Number of Samples With CNVS:</Label>
+									fx:id="maxSamplesCNVSLabel">Max Number of Samples With CNVs:</Label>
 								<ValidatedTextField GridPane.rowIndex="4" GridPane.columnIndex="1" 
 									styleClass="small-number-input"
 									fx:id="maxSamplesCNVSValidatedTextField"
@@ -119,7 +119,7 @@
 								 		styleClass="small-number-input"
 								 		fx:id="minQualityValidatedTextField"
 								 		label="$minQualityLabel"
-								 		validators="positive_number"/>
+								 		validators="positive_number, int"/>
 									<Label GridPane.rowIndex="1" GridPane.columnIndex="0"
 										fx:id="minCoverageLabel">Min Coverage:</Label>
 								 	<ValidatedTextField 
@@ -127,7 +127,7 @@
 								 		styleClass="small-number-input"
 								 		fx:id="minCoverageValidatedTextField"
 								 		label="$minCoverageLabel"
-								 		validators="positive_number"/>
+								 		validators="positive_number, int"/>
 								</GridPane>
 								<CheckBox text="Keep Only Bi Allelic SNVs"
 									fx:id="keepBiAllelicSNVsCheckBox"/>
