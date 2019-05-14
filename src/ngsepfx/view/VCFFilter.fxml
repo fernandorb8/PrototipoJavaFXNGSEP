@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Label?>
-<?import ngsepfx.view.component.ValidatedTextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,6 +14,9 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+<?import ngsepfx.view.component.ValidatedTextField?>
+<?import ngsep.transcriptome.VariantFunctionalAnnotationType?>
+
 <BorderPane >
 	<center>
 		<Accordion xmlns:fx="http://javafx.com/fxml/1" expandedPane="$expandedPane">
@@ -64,7 +66,7 @@
 									styleClass="small-number-input"
 									fx:id="minDistanceVariantsValidatedTextField"
 									label="$minDistaceVariantsLabel"
-									validators="positive_number"/>
+									validators="positive_number, int"/>
 								<Label GridPane.rowIndex="1" GridPane.columnIndex="0"
 									fx:id="mafLabel">MAF:</Label>
 								<HBox GridPane.rowIndex="1" GridPane.columnIndex="1" 
@@ -72,11 +74,11 @@
 								 	<Label >Min:</Label>
 								 	<ValidatedTextField styleClass="small-number-input"
 								 		fx:id="minMAFValidatedTextField" label="$mafLabel"
-								 		validators="positive_number"/>
+								 		validators="positive_number, percentage"/>
 								 	<Label >Max:</Label>
 								 	<ValidatedTextField styleClass="small-number-input"
 								 		fx:id="maxMAFValidatedTextField" label="$mafLabel"
-								 		validators="positive_number"/>
+								 		validators="positive_number, percentage"/>
 								</HBox>
 								<Label GridPane.rowIndex="2" GridPane.columnIndex="0"
 									fx:id="heterozygosityLabel">Observed Heterozygosity:</Label>
@@ -180,44 +182,120 @@
 								<Label>Annotation</Label>
 								<ScrollPane >
 									<VBox styleClass="vbox-ss">
-										<CheckBox text="synonymous_variant" mnemonicParsing="false"
-											fx:id="synonymousVariantCheckbox"/>
-										<CheckBox text="missense_variant" mnemonicParsing="false"
-											fx:id="missenseVariantCheckbox"/>
-										<CheckBox text="stop_lost" mnemonicParsing="false"
-											fx:id="stopLostCheckbox"/>
-										<CheckBox text="stop_gained" mnemonicParsing="false"
-											fx:id="stopGainedCheckbox"/>
-										<CheckBox text="start_lost" mnemonicParsing="false"
-											fx:id="startLostCheckbox"/>
-										<CheckBox text="inframe_deletion" mnemonicParsing="false"
-											fx:id="inframeDeletionCheckbox"/>
-										<CheckBox text="inframe_insertion" mnemonicParsing="false"
-											fx:id="inframeInsertionCheckbox"/>
-										<CheckBox text="frameshift_variant" mnemonicParsing="false"
-											fx:id="frameshiftVariantCheckbox"/>
-										<CheckBox text="splice_donor_variant" mnemonicParsing="false"
-											fx:id="spliceDonorVariantCheckbox"/>
-										<CheckBox text="splice_acceptor_variant" mnemonicParsing="false"
-											fx:id="spliceAcceptorVariantCheckbox"/>
-										<CheckBox text="exonic_splice_region_variant" mnemonicParsing="false"
-											fx:id="exonicSpliceRegionVariantCheckbox"/>
-										<CheckBox text="splice_region_variant" mnemonicParsing="false"
-											fx:id="spliceRegionVariantCheckbox"/>
-										<CheckBox text="5_prime_UTR_variant" mnemonicParsing="false"
-											fx:id="FivePrimeUTRVariantCheckbox"/>
-										<CheckBox text="3_prime_UTR_variant" mnemonicParsing="false"
-											fx:id="ThreePrimeUTRVariantCheckbox"/>
-										<CheckBox text="non_coding_transcript_exon_variant" mnemonicParsing="false"
-											fx:id="nonCodingTranscriptExonVariantCheckbox"/>
-										<CheckBox text="upstream_transcript_variant" mnemonicParsing="false"
-											fx:id="upstreamTranscriptVariantCheckbox"/>
-										<CheckBox text="downstream_transcript_variant" mnemonicParsing="false"
-											fx:id="downstreamTranscriptVariantCheckbox"/>
-										<CheckBox text="intron_variant" mnemonicParsing="false"
-											fx:id="intronVariantCheckbox"/>
-										<CheckBox text="intergenic_variant" mnemonicParsing="false"
-											fx:id="intergenicVariantCheckbox"/>
+										<CheckBox mnemonicParsing="false"
+											fx:id="synonymousVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_SYNONYMOUS"/>
+											</text>
+										</CheckBox>											
+										<CheckBox mnemonicParsing="false"
+											fx:id="missenseVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_MISSENSE"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="stopLostCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_STOP_LOST"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="stopGainedCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_NONSENSE"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="startLostCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_START_LOST"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="inframeDeletionCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_INFRAME_DEL"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="inframeInsertionCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_INFRAME_INS"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="frameshiftVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_FRAMESHIFT"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="spliceDonorVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_SPLICE_DONOR"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="spliceAcceptorVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_SPLICE_ACCEPTOR"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="exonicSpliceRegionVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_EXONIC_SPLICE_REGION"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="spliceRegionVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_SPLICE_REGION"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="FivePrimeUTRVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_5P_UTR"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="ThreePrimeUTRVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_3P_UTR"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="nonCodingTranscriptExonVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_NONCODINGRNA"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="upstreamTranscriptVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_UPSTREAM"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="downstreamTranscriptVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_DOWNSTREAM"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="intronVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_INTRON"/>
+											</text>
+										</CheckBox>	
+										<CheckBox mnemonicParsing="false"
+											fx:id="intergenicVariantCheckbox">
+											<text>
+												<VariantFunctionalAnnotationType fx:constant="ANNOTATION_INTERGENIC"/>
+											</text>
+										</CheckBox>	
 									</VBox>
 								</ScrollPane>
 							</VBox>		

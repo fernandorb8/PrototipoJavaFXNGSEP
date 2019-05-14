@@ -4,6 +4,7 @@
 package ngsepfx.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,6 +14,8 @@ import javafx.scene.layout.Priority;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import ngsepfx.controller.validator.ValidationError;
+import ngsepfx.controller.validator.Validator;
 import ngsepfx.view.component.ValidatedTextField;
 
 /**
@@ -68,6 +71,21 @@ public class ControllerUtils {
 
 		alert.show();
 		
+	}
+
+	public static void defaultValidatedTextFieldValidation(
+			ValidatedTextField validatedTextField,
+			ArrayList<ValidationError> errorsArray) {
+		ValidationError error = Validator.validate(
+				validatedTextField.getValidators()
+				, validatedTextField.getText()
+				, validatedTextField.getLabel().getText());
+		if (error != null) {
+			validatedTextField.getStyleClass().add("error");
+			errorsArray.add(error);
+		} else {
+			validatedTextField.getStyleClass().remove("error");
+		}
 	}
 
 }

@@ -4,9 +4,6 @@
 package ngsepfx.controller.validator;
 
 import java.io.File;
-import java.util.ArrayList;
-
-import ngsepfx.view.component.ValidatedTextField;
 
 /**
  * @author fernando
@@ -56,8 +53,11 @@ public class Validator{
 			, String value) {
 		if (validator == ValidationEnum.INPUT_FILE) {
 			File file = new File(value);
-			if (file.exists()) {					
-				return null;
+			if (file.exists()) {	
+				if(file.canRead()) {
+					return null;
+				}
+				return "Cannot read file: " + value;
 			} 
 			return "File doesn't exist: " + value;
 			
@@ -81,11 +81,8 @@ public class Validator{
 		} 
 		else if (validator == ValidationEnum.INT){
 			try {
-				int number = 0;
-				number = Integer.parseInt(value);
-				if ((number % 1) == 0) {
-					return null;
-				}
+				Integer.parseInt(value);
+				return null;
 			} catch (NumberFormatException e) {
 				
 			}
@@ -109,25 +106,20 @@ public class Validator{
 			}
 			return null;
 		}
+		else if (validator == ValidationEnum.PERCENTAGE) {
+			try {
+				double number = 0;
+				number = Double.parseDouble(value);
+				if (number >= 0 && number <= 1) {
+					return null;
+				}
+			} catch (NumberFormatException e) {
+				
+			}
+			return value + " is not a percentage in range [0,1]";
+		}
 		else {
 			throw new RuntimeException("Unknown validator: " + validator);
-		}
-	}
-
-	public static boolean defaultValidatedTextFieldValidation(
-			ValidatedTextField validatedTextField,
-			ArrayList<ValidationError> errorsArray) {
-		ValidationError error = Validator.validate(
-				validatedTextField.getValidators()
-				, validatedTextField.getText()
-				, validatedTextField.getLabel().getText());
-		if (error != null) {
-			validatedTextField.getStyleClass().add("error");
-			errorsArray.add(error);
-			return false;
-		} else {
-			validatedTextField.getStyleClass().remove("error");
-			return true;
 		}
 	}
 

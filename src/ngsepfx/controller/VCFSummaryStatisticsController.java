@@ -17,7 +17,6 @@ import ngsep.vcf.VCFSummaryStatisticsCalculator;
 import ngsepfx.concurrent.NGSEPTask;
 import ngsepfx.controller.validator.ValidationError;
 import ngsepfx.controller.validator.ValidationErrorUtils;
-import ngsepfx.controller.validator.Validator;
 import ngsepfx.event.NGSEPAnalyzeFileEvent;
 import ngsepfx.event.NGSEPEvent;
 import ngsepfx.view.component.ValidatedTextField;
@@ -31,10 +30,6 @@ public class VCFSummaryStatisticsController extends AnalysisAreaController {
 	//Constants.
 	
 	public static final String TASK_NAME = "VCF Summary Statistics";
-	
-	//Parameters.
-	
-	private String errorsMessage; 
 	
 	//FXML parameters.
 	
@@ -143,27 +138,25 @@ public class VCFSummaryStatisticsController extends AnalysisAreaController {
 	    			return null;
 	    		}
 			});
-		} else {
-			ControllerUtils.showDefaultErrorDialog(errorsMessage);
-			
-			errorsMessage = null;
-		}
+		} 
 	}
 	
 	private boolean validateFields() {
-		boolean areFieldsValid = true;
 		ArrayList<ValidationError> errorsArray = new ArrayList<>();
 		
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				inputVCFFileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				outputFileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minimumSamplesValidatedTextField, errorsArray);
 		
-		errorsMessage = ValidationErrorUtils.toHierarchichalString(errorsArray);
-		
-		return areFieldsValid;
+		if(!errorsArray.isEmpty()) {
+			ControllerUtils.showDefaultErrorDialog(
+					ValidationErrorUtils.toHierarchichalString(errorsArray));
+			return false;
+		}		
+		return true;
 	}
 	
 

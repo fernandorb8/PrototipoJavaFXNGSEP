@@ -4,14 +4,21 @@
 package ngsepfx.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import ngsep.genome.ReferenceGenome;
+import ngsep.vcf.VCFFilter;
+import ngsepfx.concurrent.NGSEPTask;
 import ngsepfx.controller.validator.ValidationError;
 import ngsepfx.controller.validator.ValidationErrorUtils;
 import ngsepfx.controller.validator.Validator;
@@ -28,6 +35,10 @@ public class VCFFilterController extends AnalysisAreaController {
 	//Constants.
 	
 	private static final String SUFFIX = "_filter.vcf";
+	
+	private static final String TASK_NAME = "VCF Filter";
+	
+	private static final String REFERENCE_GENOME_TASK_NAME = "Loading reference genome";
 	
 	//FXML Attributes.
 		
@@ -246,48 +257,213 @@ public class VCFFilterController extends AnalysisAreaController {
 
 	@FXML
 	private void startVCFFilter(ActionEvent event) {
-		if (this.validateFields()) {
-			
+		if (validateFields()) {
+				executeTask(new NGSEPTask<Void>() {
+				
+	    		@Override 
+	    		public Void call() {
+	    			try (PrintStream out = new PrintStream(outputFileValidatedTextField.getText())) {
+	    				
+	    				//Progress bar info.
+	    				updateMessage(fileValidatedTextField.getText());
+	    				updateTitle(TASK_NAME);
+	    				
+	    				
+	    				//NGSEPCore call.
+	    				VCFFilter instance = new VCFFilter();
+	    				
+	    				//Generic attributes.
+	    				instance.setProgressNotifier(this);
+	    				
+	    				//Specific attributes.
+	    					
+	    					//Main Arguments.
+	    					
+	    				if (!filterRegionsFileValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setRegionsToFilter(filterRegionsFileValidatedTextField.getText());
+	    				}
+	    				if (!selectRegionsFileValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setRegionsToSelect(selectRegionsFileValidatedTextField.getText());
+	    				}
+	    				if (!minDistanceVariantsValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMinDistance(Integer.parseInt(minDistanceVariantsValidatedTextField.getText()));
+	    				}
+	    				if (!minMAFValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMinMAF(Double.parseDouble(minMAFValidatedTextField.getText()));
+	    				}
+	    				if (!maxMAFValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMaxMAF(Double.parseDouble(maxMAFValidatedTextField.getText()));
+	    				}
+	    				if (!minHeterozygosityValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMinOH(Double.parseDouble(minHeterozygosityValidatedTextField.getText()));
+	    				}
+	    				if (!maxHeterozygosityValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMaxOH(Double.parseDouble(maxHeterozygosityValidatedTextField.getText()));
+	    				}
+	    				if (!minSamplesGenotypedValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMinIndividualsGenotyped(Integer.parseInt(minSamplesGenotypedValidatedTextField.getText()));
+	    				}
+	    				if (!maxSamplesCNVSValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMaxCNVs(Integer.parseInt(maxSamplesCNVSValidatedTextField.getText()));
+	    				}
+	    				if (!minQualityValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMinGenotypeQuality(Integer.parseInt(minQualityValidatedTextField.getText()));
+	    				}
+	    				if (!minCoverageValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setMinCoverage(Integer.parseInt(minQualityValidatedTextField.getText()));
+	    				}
+	    				instance.setKeepOnlySNVs(keepBiAllelicSNVsCheckBox.isSelected());
+	    				instance.setFilterInvariant(filterInvariantSitesCheckBox.isSelected());
+	    				instance.setFilterInvariantAlternative(filterInvariantAlternativeCheckBox.isSelected());
+	    				instance.setFilterInvariantReference(filterInvariantReferenceCheckBox.isSelected());
+	    				
+	    					//Functional Filter.	    				
+
+	    				if (!geneNameValidatedTextField.getText().trim().isEmpty()) {
+	    					instance.setGeneId(geneNameValidatedTextField.getText());
+	    				}
+	    				Set<String>annotations = new TreeSet<String>();
+	    				if(synonymousVariantCheckbox.isSelected()) {
+	    					annotations.add(synonymousVariantCheckbox.getText());
+	    				}
+	    				if(missenseVariantCheckbox.isSelected()) {
+	    					annotations.add(missenseVariantCheckbox.getText());
+	    				}
+	    				if(stopLostCheckbox.isSelected()) {
+	    					annotations.add(stopLostCheckbox.getText());
+	    				}
+	    				if(stopGainedCheckbox.isSelected()) {
+	    					annotations.add(stopGainedCheckbox.getText());
+	    				}
+	    				if(startLostCheckbox.isSelected()) {
+	    					annotations.add(startLostCheckbox.getText());
+	    				}
+	    				if(inframeDeletionCheckbox.isSelected()) {
+	    					annotations.add(inframeDeletionCheckbox.getText());
+	    				}
+	    				if(inframeInsertionCheckbox.isSelected()) {
+	    					annotations.add(inframeInsertionCheckbox.getText());
+	    				}
+	    				if(frameshiftVariantCheckbox.isSelected()) {
+	    					annotations.add(frameshiftVariantCheckbox.getText());
+	    				}
+	    				if(spliceDonorVariantCheckbox.isSelected()) {
+	    					annotations.add(spliceDonorVariantCheckbox.getText());
+	    				}
+	    				if(spliceAcceptorVariantCheckbox.isSelected()) {
+	    					annotations.add(spliceAcceptorVariantCheckbox.getText());
+	    				}
+	    				if(exonicSpliceRegionVariantCheckbox.isSelected()) {
+	    					annotations.add(exonicSpliceRegionVariantCheckbox.getText());
+	    				}
+	    				if(spliceRegionVariantCheckbox.isSelected()) {
+	    					annotations.add(spliceRegionVariantCheckbox.getText());
+	    				}
+	    				if(FivePrimeUTRVariantCheckbox.isSelected()) {
+	    					annotations.add(FivePrimeUTRVariantCheckbox.getText());
+	    				}
+	    				if(ThreePrimeUTRVariantCheckbox.isSelected()) {
+	    					annotations.add(ThreePrimeUTRVariantCheckbox.getText());
+	    				}
+	    				if(nonCodingTranscriptExonVariantCheckbox.isSelected()) {
+	    					annotations.add(nonCodingTranscriptExonVariantCheckbox.getText());
+	    				}
+	    				if(upstreamTranscriptVariantCheckbox.isSelected()) {
+	    					annotations.add(upstreamTranscriptVariantCheckbox.getText());
+	    				}
+	    				if(downstreamTranscriptVariantCheckbox.isSelected()) {
+	    					annotations.add(downstreamTranscriptVariantCheckbox.getText());
+	    				}
+	    				if(intronVariantCheckbox.isSelected()) {
+	    					annotations.add(intronVariantCheckbox.getText());
+	    				}
+	    				if(intergenicVariantCheckbox.isSelected()) {
+	    					annotations.add(intergenicVariantCheckbox.getText());
+	    				}
+	    				if(annotations.size()>0) instance.setAnnotations(annotations);
+	    				
+	    					//Sample Selection.
+	    				
+	    				if (!sampleSelectionInput.getText().trim().isEmpty()) {
+	    					instance.setSampleIds(sampleSelectionInput.getText());
+	    					instance.setFilterSamples(sampleSelectionComboBox.getSelectionModel().getSelectedIndex()==0);
+	    				}
+	    				
+	    					//GC Content Filter.
+	    				
+	    				if(!referenceFileValidatedTextField.getText().trim().isEmpty()) {
+	    					//Progress bar info.
+		    				updateMessage(referenceFileValidatedTextField.getText());
+		    				updateTitle(TASK_NAME + ":" + REFERENCE_GENOME_TASK_NAME);
+	    					
+	    					ReferenceGenome genome = new ReferenceGenome(referenceFileValidatedTextField.getText());
+		    				instance.setGenome(genome);
+	    					
+	    					//Fake progress.
+		    				this.keepRunning(10);
+		    				
+		    				if(!minGCContentValidatedTextField.getText().trim().isEmpty()) {
+		    					instance.setMinGCContent(Double.parseDouble(minGCContentValidatedTextField.getText()));
+		    				}
+		    				if(!maxGCContentValidatedTextField.getText().trim().isEmpty()) {
+		    					instance.setMaxGCContent(Double.parseDouble(maxGCContentValidatedTextField.getText()));
+		    				}
+	    				}
+	    				
+	    				//Progress bar info.
+	    				updateMessage(fileValidatedTextField.getText());
+	    				updateTitle(TASK_NAME);
+	    				
+	    				//Start analysis.
+	    				instance.processVariantsFile(fileValidatedTextField.getText(), out);
+	    				
+	    			}
+	    			catch (IOException e) {
+	    				throw new RuntimeException(Thread.currentThread().getName() 
+	    						+ " could not open one of the files");
+	    			} 
+	    			return null;
+	    		}
+			});
 		} 			
 	}
 	
 	//Class methods.
 
 	private boolean validateFields() {
-		boolean areFieldsValid = true;
 		ArrayList<ValidationError> errorsArray = new ArrayList<>();
 		
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				fileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				outputFileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				filterRegionsFileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				selectRegionsFileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minDistanceVariantsValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minMAFValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				maxMAFValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minHeterozygosityValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				maxHeterozygosityValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minSamplesGenotypedValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				maxSamplesCNVSValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minQualityValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minCoverageValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				referenceFileValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				minGCContentValidatedTextField, errorsArray);
-		areFieldsValid = Validator.defaultValidatedTextFieldValidation(
+		ControllerUtils.defaultValidatedTextFieldValidation(
 				maxGCContentValidatedTextField, errorsArray);
 		
 		ValidationError error = Validator.validate(
@@ -297,7 +473,6 @@ public class VCFFilterController extends AnalysisAreaController {
 		if (error != null) {
 			sampleSelectionInput.getStyleClass().add("error");
 			errorsArray.add(error);
-			areFieldsValid = false;
 		} else {
 			sampleSelectionInput.getStyleClass().remove("error");
 		}
@@ -305,9 +480,9 @@ public class VCFFilterController extends AnalysisAreaController {
 		if(!errorsArray.isEmpty()) {
 			ControllerUtils.showDefaultErrorDialog(
 					ValidationErrorUtils.toHierarchichalString(errorsArray));
-		}
-		
-		return areFieldsValid;
+			return false;
+		}		
+		return true;
 	}
 
 }
